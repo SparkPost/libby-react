@@ -64,6 +64,17 @@ Run libby:
 npm run libby:start
 ```
 
+Create an entry:
+
+```js
+import React from 'react';
+import { describe, it } from '@sparkpost/libby-react';
+
+describe('My Component', () => {
+  it('renders correctly', () => <div>This is a React component!</div>);
+});
+```
+
 ---
 
 ### License
