@@ -1,5 +1,5 @@
 {
-  "name": "libby-react",
+  "name": "@sparkpost/libby-react",
   "version": "0.0.21",
   "description": "Libby is an open source tool for React component development",
   "main": "src/api/index.js",
@@ -8,7 +8,8 @@
   },
   "scripts": {
     "format": "prettier --write '**/*.{js,md}'",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:ci": "cd example && npm ci && npm run build"
   },
   "husky": {
     "hooks": {
@@ -25,14 +26,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonambas/libby-react.git"
+    "url": "git+https://github.com/SparkPost/libby-react.git"
   },
-  "author": "Jon Ambas",
+  "author": "SparkPost",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonambas/libby-react/issues"
+    "url": "https://github.com/SparkPost/libby-react/issues"
   },
-  "homepage": "https://github.com/jonambas/libby-react#readme",
+  "homepage": "https://github.com/SparkPost/libby-react#readme",
   "dependencies": {
     "@babel/core": "^7.12.3",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
