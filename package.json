@@ -1,5 +1,5 @@
 {
-  "name": "libby-react",
+  "name": "@sparkpost/libby-react",
   "version": "0.0.21",
   "description": "Libby is an open source tool for React component development",
   "main": "src/api/index.js",
