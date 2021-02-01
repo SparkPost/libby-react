@@ -25,14 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonambas/libby-react.git"
+    "url": "git+https://github.com/SparkPost/libby-react.git"
   },
-  "author": "Jon Ambas",
+  "author": "SparkPost",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonambas/libby-react/issues"
+    "url": "https://github.com/SparkPost/libby-react/issues"
   },
-  "homepage": "https://github.com/jonambas/libby-react#readme",
+  "homepage": "https://github.com/SparkPost/libby-react#readme",
   "dependencies": {
     "@babel/core": "^7.12.3",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
