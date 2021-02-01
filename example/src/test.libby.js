@@ -1,5 +1,5 @@
 import React from 'react';
-import { describe, add } from 'libby-react';
+import { describe, add } from '@sparkpost/libby-react';
 
 describe('Category 1', () => {
   add('name 1', () => <div>This is a React component</div>);
