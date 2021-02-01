@@ -2,6 +2,9 @@
   "name": "@sparkpost/libby-react",
   "version": "0.0.21",
   "description": "Libby is an open source tool for React component development",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "src/api/index.js",
   "bin": {
     "libby": "bin/cli.js"
