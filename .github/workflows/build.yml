@@ -1,4 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the matchbox, icons, and tokens
+# This workflow will do a clean install of node dependencies, build the libby example
 name: Build
 
 on:
@@ -21,4 +21,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - run: npm ci
       - run: npm run build:ci
