@@ -5,7 +5,7 @@ import Theme from '@sweatpants/theme';
 import Box from '@sweatpants/box';
 import styled from 'styled-components';
 import { theme } from './theme';
-import bus from '../api/pagebus';
+import createBus from '../api/pagebus';
 import BackgroundContext, { BackgroundContextProvider } from './context/BackgroundContext';
 import SearchContext from './context/SearchContext';
 import useWindowEvent from './hooks/useWindowEvent';
@@ -29,6 +29,12 @@ function App() {
 
   const environment = useWindow();
   const searchString = environment?.location?.search;
+
+  const bus = React.useMemo(() => {
+    // Pulls a unique id from the parent window to namespace the event emitter
+    // See: src/ui/index.js
+    return createBus(document.getElementById('sync_id').getAttribute('data-id'));
+  }, []);
 
   bus.on('set_entries', (d) => {
     setInitialized(true);
