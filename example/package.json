@@ -1,0 +1,17 @@
+{
+  "name": "libby-example",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "libby start",
+    "build": "libby build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "libby-react": "0.0.21",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
