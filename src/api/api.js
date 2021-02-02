@@ -1,4 +1,4 @@
-import bus from './pagebus';
+import createBus from './pagebus';
 
 function removeSpaces(str) {
   return str.split(' ').join('-');
@@ -109,6 +109,10 @@ export class Libby {
   }
 
   _startEvents() {
+    // Pulls a unique id from the parent window to namespace the event emitter
+    // See: src/ui/index.js
+    const bus = createBus(window.parent.document.getElementById('sync_id').getAttribute('data-id'));
+
     bus.emit('set_entries', this._getMetadata());
 
     bus.on('load_entry', (search) => {

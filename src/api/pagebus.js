@@ -1,6 +1,7 @@
 import createBus from 'page-bus';
 
-const bus = createBus(`libby-react`);
-bus.setMaxListeners(100);
-
-export default bus;
+export default function (id) {
+  const bus = createBus(`libby-react-${id}`);
+  bus.setMaxListeners(100);
+  return bus;
+}
