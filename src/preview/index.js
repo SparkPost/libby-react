@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import qs from 'query-string';
 import { api } from '../api';
 import Source from './source';
+import ErrorDisplay from './error';
 
 const out = document.createElement('div');
 document.body.append(out);
@@ -19,8 +20,22 @@ style.innerHTML = `
     color: #a2adb8 !important;
   }
   
-  #libby-source code {
+  #libby-source code, #libby-error, #libby-error-stack {
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
+  }
+
+  #libby-error, #libby-error-stack {
+    color: #FF2222;
+  }
+
+  #libby-error {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  #libby-error-stack {
+    margin-top: 10px;
+    font-size: 11px;
   }
   
   #libby-source pre {
@@ -48,7 +63,11 @@ function Preview({ layout: Layout = require('./layout') } = {}) {
     return <Source entry={entry} />;
   }
 
-  return <Layout>{entry.render()}</Layout>;
+  try {
+    return <Layout>{entry.render()}</Layout>;
+  } catch (e) {
+    return <ErrorDisplay error={e} />;
+  }
 }
 
 function renderPreview() {
