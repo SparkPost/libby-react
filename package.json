@@ -64,7 +64,6 @@
     "page-bus": "^3.0.1",
     "query-string": "^6.13.6",
     "react-element-to-jsx-string": "^14.3.2",
-    "react-error-overlay": "^5.1.6",
     "react-syntax-highlighter": "^15.4.3",
     "style-loader": "^2.0.0",
     "styled-components": "^5.2.0",
