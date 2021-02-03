@@ -111,7 +111,8 @@ export class Libby {
   _startEvents() {
     // Pulls a unique id from the parent window to namespace the event emitter
     // See: src/ui/index.js
-    const bus = createBus(window.parent.document.getElementById('sync_id').getAttribute('data-id'));
+    const syncElem = window.parent.document.getElementById('sync_id');
+    const bus = createBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
 
     bus.emit('set_entries', this._getMetadata());
 
