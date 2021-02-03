@@ -34,7 +34,7 @@ const NavLi = styled.li`
       mb: 200,
       fontSize: 100
     })}
-    ${({ selected }) => (selected ? css({ color: 'blue', transform: 'translateX(3px)' }) : null)}
+    ${({ selected }) => (selected ? css({ color: 'blue', bg: 'rgba(18,115,230, 0.15)' }) : null)}
   }
 
   a:hover {
@@ -160,7 +160,7 @@ const StyledFolderBorder = styled.div`
 function NavKind(props) {
   const { item = {} } = props;
   return (
-    <Box position="relative">
+    <Box position="relative" mb="200">
       <StyledFolderBorder />
       {item.kinds
         ? Object.keys(item.kinds).map((kind) => {

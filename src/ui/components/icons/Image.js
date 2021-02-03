@@ -2,17 +2,11 @@ import React from 'react';
 
 function Image() {
   return (
-    <svg
-      fill="currentColor"
-      preserveAspectRatio="xMidYMid meet"
-      viewBox="1 1 22 22"
-      width="14px"
-      height="14px"
-    >
-      <g>
-        <path d="M0 0h24v24H0V0z" fill="none" />
-        <path d="M21 21V3H3v18h18zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-      </g>
+    <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15">
+      <path
+        d="M10 3.5h1m3.5 5.993l-3-2.998-3 2.998-4-4.996L.5 9.5m1-9h12a1 1 0 011 1v12a1 1 0 01-1 1h-12a1 1 0 01-1-1v-12a1 1 0 011-1z"
+        stroke="currentColor"
+      ></path>
     </svg>
   );
 }

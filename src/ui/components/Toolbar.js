@@ -32,7 +32,7 @@ function Toolbar(props) {
   }
 
   return (
-    <Inline space="100">
+    <Inline space="300">
       <Button onClick={toggleSource} title="Toggle source code">
         <IconWrapper>
           <Code />

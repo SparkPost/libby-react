@@ -6,8 +6,8 @@ function Open() {
       fill="currentColor"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 24 24"
-      width="14px"
-      height="14px"
+      width="15"
+      height="15"
     >
       <g>
         <path d="M0 0h24v24H0V0z" fill="none" />

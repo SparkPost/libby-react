@@ -14,15 +14,13 @@ function Chevron({ open }) {
   return (
     <Box as={StyledChevron} open={open} color="gray.600">
       <svg
-        fill="currentColor"
-        preserveAspectRatio="xMidYMid meet"
-        viewBox="0 0 24 24"
-        width="14px"
-        height="14px"
+        viewBox="0 0 15 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        width="15"
+        height="15"
       >
-        <g>
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-        </g>
+        <path d="M6.5 10.5l3-3-3-3" stroke="currentColor" stroke-linecap="square"></path>
       </svg>
     </Box>
   );
