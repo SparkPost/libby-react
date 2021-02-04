@@ -56,3 +56,9 @@ function renderPreview() {
 }
 
 renderPreview();
+
+if (module.hot) {
+  module.hot.accept('../api', () => {
+    renderPreview();
+  });
+}
