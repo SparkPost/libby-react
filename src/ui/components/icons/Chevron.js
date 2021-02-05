@@ -20,7 +20,7 @@ function Chevron({ open }) {
         width="15"
         height="15"
       >
-        <path d="M6.5 10.5l3-3-3-3" stroke="currentColor" stroke-linecap="square"></path>
+        <path d="M6.5 10.5l3-3-3-3" stroke="currentColor" strokeLinecap="square"></path>
       </svg>
     </Box>
   );

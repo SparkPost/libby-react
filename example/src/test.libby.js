@@ -40,7 +40,7 @@ describe('Category3', () => {
   });
 });
 
-add('root entry 1', () => {
+add('c root entry 1', () => {
   const [toggle, setToggle] = React.useState(true);
 
   return (
@@ -51,4 +51,5 @@ add('root entry 1', () => {
   );
 });
 
-add('root entry', () => 'test');
+add('b root entry', () => 'test');
+add('a root entry', () => 'test');
