@@ -67,7 +67,10 @@ export class Libby {
   }
 
   _getMetadata() {
-    const withoutRender = this.source.map(({ render, ...entry }) => entry);
+    const source = this.source;
+    source.sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+    source.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+    const withoutRender = source.map(({ render, ...entry }) => entry);
 
     function expand(acc, item) {
       const parts = item.kind.split('__');
@@ -77,7 +80,7 @@ export class Libby {
         return {
           ...acc,
           [kind]: {
-            entries: [...(acc[kind] ? acc[kind].entries : []), item]
+            entries: [...(acc[kind]?.entries ? acc[kind].entries : []), item]
           }
         };
       }
