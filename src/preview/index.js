@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import qs from 'query-string';
 import { api } from '../api';
 import Source from './source';
+import previewCallback from '__LIBBY_PREVIEW__';
 
 const out = document.createElement('div');
 document.body.append(out);
@@ -34,7 +35,9 @@ style.innerHTML = `
     line-height: 22px !important;
   }  
 `;
+
 document.head.appendChild(style);
+previewCallback();
 
 function Preview({ layout: Layout = require('./layout') } = {}) {
   const { path, source } = qs.parse(window.location.search);
