@@ -68,8 +68,8 @@ export class Libby {
 
   _getMetadata() {
     const source = this.source;
-    source.sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
     source.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+    source.sort((a, b) => (a.kind < b.kind ? -1 : a.kind > b.kind ? 1 : 0));
     const withoutRender = source.map(({ render, ...entry }) => entry);
 
     function expand(acc, item) {
