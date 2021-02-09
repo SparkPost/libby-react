@@ -8,8 +8,6 @@ import { theme } from './theme';
 import createBus from '../api/pagebus';
 import BackgroundContext, { BackgroundContextProvider } from './context/BackgroundContext';
 import SearchContext from './context/SearchContext';
-import useWindowEvent from './hooks/useWindowEvent';
-import useIframeEvent from './hooks/useIframeEvent';
 import useWindow from './hooks/useWindow';
 import Navigation from './components/Navigation';
 import Input from './components/Input';
@@ -42,19 +40,6 @@ function App() {
   });
 
   bus.emit('load_entry', searchString);
-
-  function handleKeyEvents(e) {
-    if (e.keyCode === 83) {
-      setShowSidebar(!showSidebar);
-    }
-
-    if (e.keyCode === 70) {
-      inputRef.current.focus();
-    }
-  }
-
-  useWindowEvent('keydown', handleKeyEvents);
-  useIframeEvent('libby-iframe', 'keydown', handleKeyEvents);
 
   function handleSearchChange(e) {
     setInputValue(e.currentTarget.value);

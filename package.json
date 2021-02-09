@@ -6,6 +6,7 @@
     "access": "public"
   },
   "main": "src/api/index.js",
+  "types": "src/api/types.d.js",
   "bin": {
     "libby": "bin/cli.js"
   },

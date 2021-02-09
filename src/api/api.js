@@ -1,11 +1,11 @@
 import createBus from './pagebus';
 
-function removeSpaces(str) {
-  return str.split(' ').join('-');
+function slug(str) {
+  return str.replace(/[^a-zA-Z0-9]+/g, '-');
 }
 
 function makeKey(name, kind) {
-  return `${removeSpaces(kind)}__${removeSpaces(name)}`;
+  return `${slug(kind)}__${slug(name)}`;
 }
 
 export class Libby {

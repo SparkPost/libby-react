@@ -39,12 +39,16 @@ style.innerHTML = `
 document.head.appendChild(style);
 previewCallback();
 
-function Preview({ layout: Layout = require('./layout') } = {}) {
+function Preview({ layout: Layout = require('./layout'), home: Home = require('./home') } = {}) {
   const { path, source } = qs.parse(window.location.search);
   const entry = api.getEntry(path);
 
   if (!entry) {
-    return null;
+    return (
+      <Layout>
+        <Home />
+      </Layout>
+    );
   }
 
   if (source === 'true') {
