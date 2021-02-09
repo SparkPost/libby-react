@@ -65,9 +65,9 @@ function App() {
   }
 
   return (
-    <Box display="grid" gridTemplateColumns={showSidebar ? 'minmax(200px, 15%) 1fr' : '1fr'}>
+    <Box display="grid" gridTemplateColumns={showSidebar ? 'minmax(200px, 18%) 1fr' : '1fr'}>
       {showSidebar ? (
-        <Box height="100%">
+        <Box height="100%" maxHeight="100vh" overflowY="auto" overflowX="hidden">
           <Box as="h1" fontSize="100" m="0" my="400" px="300">
             {config.title || 'Libby'}
           </Box>
