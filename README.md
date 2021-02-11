@@ -3,6 +3,8 @@
 Libby is a focused, no-frills React component development tool, similar to Storybook but without the plugins or addons. Libby provides a standalone environment that can be used or deployed with your component or design system documentation.
 
 ##### Demos
+
+- [matchbox-libby.netlify.app/](https://matchbox-libby.netlify.app/)
 - [libby.netlify.app/](https://libby.netlify.app/)
 
 ---
@@ -25,7 +27,9 @@ module.exports = {
 
   // Optional
   outputPath: 'dist',
-  layout: 'src/components/layout.js',
+  layout: '.libby/layout.js',
+  home: '.libby/home.js',
+  preview: '.libby/preview.js',
   openBrowser: true,
   port: 9000,
   title: 'Page Title',
