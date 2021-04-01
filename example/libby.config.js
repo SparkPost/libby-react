@@ -5,7 +5,7 @@ module.exports = {
   port: 9003,
   outputPath: 'dist/libby-example',
   backgrounds: {
-    default: 'white',
+    default: 'gray',
     values: [
       {
         name: 'white',
