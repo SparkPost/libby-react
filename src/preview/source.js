@@ -24,25 +24,49 @@ const StyledIcon = styled(Button)`
 
 const StyledXResize = styled(Box)`
   cursor: col-resize;
-  transition: background 200ms ease-in-out;
-
+  &:before {
+    position: absolute;
+    content: '';
+    left: 4px;
+    right: 0;
+    top: 1px;
+    bottom: 1px;
+    border-left: 1px solid ${(props) => props.theme.colors.blue};
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease-in-out;
+    transition-delay: 200ms;
+    border-radius: 5px;
+  }
   &:hover,
   &:active {
-    transition: background 200ms ease-in-out;
-    transition-delay: 200ms;
-    background: ${(props) => props.theme.colors.blue};
+    &:before {
+      opacity: 1;
+    }
   }
 `;
 
 const StyledYResize = styled(Box)`
   cursor: row-resize;
-  transition: background 200ms ease-in-out;
-
+  &:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 4px;
+    bottom: 0;
+    border-top: 1px solid ${(props) => props.theme.colors.blue};
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease-in-out;
+    transition-delay: 200ms;
+    border-radius: 5px;
+  }
   &:hover,
   &:active {
-    transition: background 200ms ease-in-out;
-    transition-delay: 200ms;
-    background: ${(props) => props.theme.colors.blue};
+    &:before {
+      opacity: 1;
+    }
   }
 `;
 
