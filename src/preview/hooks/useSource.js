@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-const useSource = ({ source, minWidth = 200, minHeight = 200 }) => {
+
+const useSource = ({
+  source,
+  minWidth = 200,
+  minHeight = 200,
+  startHeight: startHeightProp = 400,
+  startWidth: startWidthProp = 500
+}) => {
   const [isSource, setIsSource] = useState(false);
   const [orientation, setOrientation] = useState('vertical');
-  const [startWidth, setStartWidth] = useState(400);
-  const [startHeight, setStartHeight] = useState(400);
-  const [width, setWidth] = useState(400);
-  const [height, setHeight] = useState(400);
+  const [startWidth, setStartWidth] = useState(startWidthProp);
+  const [startHeight, setStartHeight] = useState(startHeightProp);
+  const [width, setWidth] = useState(startWidthProp);
+  const [height, setHeight] = useState(startHeightProp);
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
   const [aimX, setAimX] = useState(0);

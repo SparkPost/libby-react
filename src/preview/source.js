@@ -14,7 +14,6 @@ import { theme } from '../ui/theme';
 
 const StyledWrapper = styled(Box)`
   user-select: ${(props) => (props.resizing ? 'none' : '')};
-  pointer-events: ${(props) => (props.resizing ? 'none' : '')};
 `;
 
 const StyledIcon = styled(Button)`
@@ -25,10 +24,26 @@ const StyledIcon = styled(Button)`
 
 const StyledXResize = styled(Box)`
   cursor: col-resize;
+  transition: background 200ms ease-in-out;
+
+  &:hover,
+  &:active {
+    transition: background 200ms ease-in-out;
+    transition-delay: 200ms;
+    background: ${(props) => props.theme.colors.blue};
+  }
 `;
 
 const StyledYResize = styled(Box)`
   cursor: row-resize;
+  transition: background 200ms ease-in-out;
+
+  &:hover,
+  &:active {
+    transition: background 200ms ease-in-out;
+    transition-delay: 200ms;
+    background: ${(props) => props.theme.colors.blue};
+  }
 `;
 
 function Source(props) {
@@ -55,9 +70,9 @@ function Source(props) {
         >
           <StyledYResize
             position="absolute"
-            top="-16px"
+            top="-4px"
             width="100%"
-            height="32px"
+            height="8px"
             bg="transparent"
             display={orientation === 'horizontal' ? 'block' : 'none'}
             {...resizeYProps}
@@ -65,8 +80,8 @@ function Source(props) {
           <StyledXResize
             position="absolute"
             height="100%"
-            width="32px"
-            left="-16px"
+            width="8px"
+            left="-4px"
             bg="transparent"
             display={orientation === 'horizontal' ? 'none' : 'block'}
             {...resizeXProps}
