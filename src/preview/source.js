@@ -51,8 +51,8 @@ const StyledYResize = styled(Box)`
   &:before {
     position: absolute;
     content: '';
-    left: 0;
-    right: 0;
+    left: 1px;
+    right: 1px;
     top: 4px;
     bottom: 0;
     border-top: 1px solid ${(props) => props.theme.colors.blue};
