@@ -11,14 +11,7 @@ import Expand from './icons/Expand';
 import Image from './icons/Image';
 import Code from './icons/Code';
 import Button from './Button';
-
-function IconWrapper(props) {
-  return (
-    <Box pl="200" py="100" position="relative" top="2px" color="black">
-      {props.children}
-    </Box>
-  );
-}
+import IconWrapper from './IconWrapper';
 
 function Toolbar(props) {
   const { toggleSidebar } = props;
