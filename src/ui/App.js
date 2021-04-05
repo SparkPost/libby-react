@@ -7,23 +7,36 @@ import styled from 'styled-components';
 import { theme } from './theme';
 import createBus from '../api/pagebus';
 import BackgroundContext, { BackgroundContextProvider } from './context/BackgroundContext';
+import SourceContext, { SourceContextProvider } from './context/SourceContext';
 import SearchContext from './context/SearchContext';
+import Source from './source';
 import useWindow from './hooks/useWindow';
+import useSource from './hooks/useSource';
 import Navigation from './components/Navigation';
 import Input from './components/Input';
 import Toolbar from './components/Toolbar';
 
-const StyledWrapper = styled(Box)`
+const StyledPreviewWrapper = styled(Box)`
   transition: background 0.1s;
+`;
+
+const StyledResizeWrapper = styled(Box)`
+  cursor: ${(props) =>
+    props.resizing ? (props.orientation === 'vertical' ? 'col-resize' : 'row-resize') : ''};
 `;
 
 function App() {
   const { value: backgroundValue } = React.useContext(BackgroundContext);
+  const sourceContext = React.useContext(SourceContext);
   const [initialized, setInitialized] = React.useState(false);
   const [navItems, setNavItems] = React.useState({});
   const [showSidebar, setShowSidebar] = React.useState(true);
   const [inputValue, setInputValue] = React.useState('');
   const inputRef = React.useRef();
+
+  const { resizeYProps, resizeXProps, width, height, resizing } = useSource({
+    orientation: sourceContext.orientation
+  });
 
   const environment = useWindow();
   const searchString = environment?.location?.search;
@@ -79,19 +92,28 @@ function App() {
         <Box position="absolute" top="200" right="500">
           <Toolbar
             toggleSidebar={() => setShowSidebar(!showSidebar)}
-            toggleSource={() => setShowSource(!showSource)}
+            toggleSource={sourceContext.toggleShowSource}
           />
         </Box>
-        <StyledWrapper bg={backgroundValue || 'white'} borderRadius="5px" height="100%">
-          <Box
-            id="libby-iframe"
-            as="iframe"
-            src={`${environment.location.origin}/iframe.html`}
-            width="100%"
-            height="100%"
-            border="none"
+        <StyledResizeWrapper resizing={resizing} position="relative" height="100%">
+          <StyledPreviewWrapper bg={backgroundValue || 'white'} borderRadius="5px" height="100%">
+            <Box
+              id="libby-iframe"
+              as="iframe"
+              src={`${environment.location.origin}/iframe.html`}
+              border="none"
+            />
+          </StyledPreviewWrapper>
+
+          <Source
+            width={width}
+            height={height}
+            orientation={sourceContext.orientation}
+            toggleOrientation={sourceContext.toggleOrientation}
+            resizeYProps={resizeYProps}
+            resizeXProps={resizeXProps}
           />
-        </StyledWrapper>
+        </StyledResizeWrapper>
       </Box>
     </Box>
   );
@@ -100,11 +122,13 @@ function App() {
 function Wrapper() {
   return (
     <BackgroundContextProvider>
-      <Theme theme={theme}>
-        <Router>
-          <App path="/" />
-        </Router>
-      </Theme>
+      <SourceContextProvider>
+        <Theme theme={theme}>
+          <Router>
+            <App path="/" />
+          </Router>
+        </Theme>
+      </SourceContextProvider>
     </BackgroundContextProvider>
   );
 }

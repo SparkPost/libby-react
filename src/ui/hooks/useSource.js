@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 
 const useSource = ({
-  source,
   minWidth = 200,
   minHeight = 200,
   startHeight: startHeightProp = 400,
-  startWidth: startWidthProp = 500
-}) => {
-  const [isSource, setIsSource] = useState(false);
-  const [orientation, setOrientation] = useState('vertical');
+  startWidth: startWidthProp = 500,
+  orientation = 'vertical'
+} = {}) => {
   const [startWidth, setStartWidth] = useState(startWidthProp);
   const [startHeight, setStartHeight] = useState(startHeightProp);
   const [width, setWidth] = useState(startWidthProp);
@@ -57,10 +55,6 @@ const useSource = ({
   };
 
   useEffect(() => {
-    setIsSource(source);
-  }, []);
-
-  useEffect(() => {
     // Handle mousemove and mouseup here
     window.addEventListener('mousemove', handleMouseMove, false);
     window.addEventListener('mouseup', handleMouseUp, false);
@@ -69,16 +63,6 @@ const useSource = ({
       window.removeEventListener('mouseup', handleMouseUp, false);
     };
   }, [resizing, aimX, aimY, startX, startY, width, height]);
-
-  const toggleOrientation = () => {
-    if (orientation === 'vertical') {
-      setOrientation('horizontal');
-    }
-
-    if (orientation === 'horizontal') {
-      setOrientation('vertical');
-    }
-  };
 
   const onXMouseDown = (event) => {
     const x = event.pageX;
@@ -96,9 +80,7 @@ const useSource = ({
     width,
     height,
     resizing,
-    isSource,
     orientation,
-    toggleOrientation,
     resizeXProps: {
       onMouseDown: onXMouseDown
     },
