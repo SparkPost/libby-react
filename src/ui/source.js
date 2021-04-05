@@ -1,5 +1,4 @@
 import React from 'react';
-// import reactElementToJSXString from 'react-element-to-jsx-string';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { ghcolors } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
@@ -123,8 +122,7 @@ function Source(props) {
         </StyledIcon>
       </Box>
       <SyntaxHighlighter language="jsx" showLineNumbers style={ghcolors}>
-        test
-        {/* {reactElementToJSXString(props.entry.render())} */}
+        {props.code}
       </SyntaxHighlighter>
     </StyledWrapper>
   );

@@ -5,7 +5,7 @@ import Theme from '@sweatpants/theme';
 import Box from '@sweatpants/box';
 import styled from 'styled-components';
 import { theme } from './theme';
-import createBus from '../api/pagebus';
+import useBus from '../hooks/useBus';
 import BackgroundContext, { BackgroundContextProvider } from './context/BackgroundContext';
 import SourceContext, { SourceContextProvider } from './context/SourceContext';
 import SearchContext from './context/SearchContext';
@@ -32,7 +32,9 @@ function App() {
   const [navItems, setNavItems] = React.useState({});
   const [showSidebar, setShowSidebar] = React.useState(true);
   const [inputValue, setInputValue] = React.useState('');
+  const [entrySource, setEntrySource] = React.useState('');
   const inputRef = React.useRef();
+  const bus = useBus(document.getElementById('sync_id').getAttribute('data-id'));
 
   const { resizeYProps, resizeXProps, width, height, resizing } = useSource({
     orientation: sourceContext.orientation
@@ -41,18 +43,16 @@ function App() {
   const environment = useWindow();
   const searchString = environment?.location?.search;
 
-  const bus = React.useMemo(() => {
-    // Pulls a unique id from the parent window to namespace the event emitter
-    // See: src/ui/index.js
-    return createBus(document.getElementById('sync_id').getAttribute('data-id'));
-  }, []);
-
   bus.on('set_entries', (d) => {
     setInitialized(true);
     setNavItems(d);
   });
 
   bus.emit('load_entry', searchString);
+
+  bus.on('set_entry_source', (d) => {
+    setEntrySource(d);
+  });
 
   function handleSearchChange(e) {
     setInputValue(e.currentTarget.value);
@@ -112,6 +112,7 @@ function App() {
               toggleOrientation={sourceContext.toggleOrientation}
               resizeYProps={resizeYProps}
               resizeXProps={resizeXProps}
+              code={entrySource}
             />
           ) : null}
         </StyledResizeWrapper>

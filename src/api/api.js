@@ -1,5 +1,3 @@
-import createBus from './pagebus';
-
 function slug(str) {
   return str.replace(/[^a-zA-Z0-9]+/g, '-');
 }
@@ -25,7 +23,6 @@ export class Libby {
     }
 
     load(include);
-    this._startEvents();
   }
 
   add(name, render) {
@@ -80,7 +77,7 @@ export class Libby {
     return source;
   }
 
-  _getMetadata() {
+  getMetadata() {
     const source = this._sort();
     const withoutRender = source.map(({ render, ...entry }) => entry);
 
@@ -121,20 +118,5 @@ export class Libby {
     }
 
     return withoutRender.reduce(expand, {});
-  }
-
-  _startEvents() {
-    // Pulls a unique id from the parent window to namespace the event emitter
-    // See: src/ui/index.js
-    const syncElem = window.parent.document.getElementById('sync_id');
-    const bus = createBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
-
-    bus.emit('set_entries', this._getMetadata());
-
-    bus.on('load_entry', (search) => {
-      if (search && window.location.search !== search) {
-        window.location.search = search;
-      }
-    });
   }
 }

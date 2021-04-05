@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import qs from 'query-string';
-// import createBus from '../api/pagebus';
+import reactElementToJSXString from 'react-element-to-jsx-string';
+import useBus from '../hooks/useBus';
 import { api } from '../api';
 import previewCallback from '__LIBBY_PREVIEW__';
 
@@ -21,6 +22,18 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
   const { path } = qs.parse(window.location.search);
   const entry = api.getEntry(path);
 
+  // Pulls a unique id from the parent window to namespace the event emitter
+  // See: src/ui/index.js
+  const syncElem = window.parent.document.getElementById('sync_id');
+  const bus = useBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
+
+  bus.emit('set_entries', api.getMetadata());
+  bus.on('load_entry', (search) => {
+    if (search && window.location.search !== search) {
+      window.location.search = search;
+    }
+  });
+
   if (!entry) {
     return (
       <Layout>
@@ -28,6 +41,8 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
       </Layout>
     );
   }
+
+  bus.emit('set_entry_source', reactElementToJSXString(entry.render()));
 
   return <Layout>{entry.render()}</Layout>;
 }
