@@ -104,15 +104,16 @@ function App() {
               border="none"
             />
           </StyledPreviewWrapper>
-
-          <Source
-            width={width}
-            height={height}
-            orientation={sourceContext.orientation}
-            toggleOrientation={sourceContext.toggleOrientation}
-            resizeYProps={resizeYProps}
-            resizeXProps={resizeXProps}
-          />
+          {sourceContext.show ? (
+            <Source
+              width={width}
+              height={height}
+              orientation={sourceContext.orientation}
+              toggleOrientation={sourceContext.toggleOrientation}
+              resizeYProps={resizeYProps}
+              resizeXProps={resizeXProps}
+            />
+          ) : null}
         </StyledResizeWrapper>
       </Box>
     </Box>
