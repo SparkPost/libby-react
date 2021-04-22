@@ -3,7 +3,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 const useSource = ({
   minWidth = 200,
   minHeight = 200,
-  startHeight: startHeightProp = 400,
+  startHeight: startHeightProp = 300,
   startWidth: startWidthProp = 500,
   orientation = 'vertical'
 } = {}) => {
