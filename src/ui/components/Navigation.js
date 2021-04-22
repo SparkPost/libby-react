@@ -60,7 +60,7 @@ function NavEntry(props) {
 
   return (
     <NavLi selected={selectedKey === entry.key}>
-      <Link to={`?path=${entry.key}&source=false`}>{entry.name}</Link>
+      <Link to={`?path=${entry.key}`}>{entry.name}</Link>
     </NavLi>
   );
 }

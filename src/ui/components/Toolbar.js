@@ -14,15 +14,10 @@ import Button from './Button';
 import IconWrapper from './IconWrapper';
 
 function Toolbar(props) {
-  const { toggleSidebar } = props;
+  const { toggleSidebar, toggleSource } = props;
   const { cycle } = React.useContext(BackgroundContext);
   const environment = useWindow();
   const href = `${environment?.location?.origin}/iframe.html${environment?.location?.search}`;
-
-  function toggleSource() {
-    const { path, source } = qs.parse(environment?.location?.search);
-    navigate(`/?${qs.stringify({ path, source: source === 'false' })}`);
-  }
 
   return (
     <Inline space="300">
