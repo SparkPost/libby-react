@@ -69,9 +69,6 @@ export class Libby {
       return str.toLowerCase();
     }
     source.sort((a, b) =>
-      lower(a.name) < lower(b.name) ? -1 : lower(a.name) > lower(b.name) ? 1 : 0
-    );
-    source.sort((a, b) =>
       lower(a.kind) < lower(b.kind) ? -1 : lower(a.kind) > lower(b.kind) ? 1 : 0
     );
     return source;
