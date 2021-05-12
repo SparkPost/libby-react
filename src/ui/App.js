@@ -102,18 +102,36 @@ function App() {
               as="iframe"
               src={`${environment.location.origin}/iframe.html`}
               border="none"
+              width="100%"
+              height="100%"
             />
           </StyledPreviewWrapper>
           {sourceContext.show ? (
-            <Source
-              width={width}
-              height={height}
-              orientation={sourceContext.orientation}
-              toggleOrientation={sourceContext.toggleOrientation}
-              resizeYProps={resizeYProps}
-              resizeXProps={resizeXProps}
-              code={entrySource}
-            />
+            <>
+              {/*
+                Resize event handlers don't work when over an iframe, because they are not part of the "window"
+                So we add a hidden box here when resizing so mousemove is picked up
+              */}
+              {resizing && (
+                <Box
+                  position="absolute"
+                  top="0"
+                  left="0"
+                  bottom="0"
+                  right="0"
+                  bg="transparent"
+                ></Box>
+              )}
+              <Source
+                width={width}
+                height={height}
+                orientation={sourceContext.orientation}
+                toggleOrientation={sourceContext.toggleOrientation}
+                resizeYProps={resizeYProps}
+                resizeXProps={resizeXProps}
+                code={entrySource}
+              />
+            </>
           ) : null}
         </StyledResizeWrapper>
       </Box>

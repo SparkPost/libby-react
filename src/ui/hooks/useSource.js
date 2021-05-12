@@ -38,7 +38,7 @@ const useSource = ({
     }
   };
 
-  const handleMouseUp = (event) => {
+  const handleMouseUp = () => {
     if (orientation === 'horizontal') {
       setStartHeight(height);
     }
