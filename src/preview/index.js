@@ -5,6 +5,8 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 import useBus from '../hooks/useBus';
 import { api } from '../api';
 import previewCallback from '__LIBBY_PREVIEW__';
+import ErrorDisplay from './error';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const out = document.createElement('div');
 document.body.append(out);
@@ -13,6 +15,19 @@ const style = document.createElement('style');
 style.innerHTML = `
   body { font-size: 16px; margin: 0; }
   * { box-sizing: border-box; }
+
+  #libby-error, #libby-error-stack {
+    color: #FF2222;
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
+  }
+  #libby-error {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  #libby-error-stack {
+    margin-top: 10px;
+    font-size: 11px;
+  }
 `;
 
 document.head.appendChild(style);
@@ -48,7 +63,12 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
 }
 
 function renderPreview() {
-  ReactDOM.render(<Preview />, out);
+  ReactDOM.render(
+    <ErrorBoundary FallbackComponent={ErrorDisplay}>
+      <Preview />
+    </ErrorBoundary>,
+    out
+  );
 }
 
 renderPreview();
