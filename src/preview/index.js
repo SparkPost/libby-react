@@ -57,9 +57,13 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
     );
   }
 
+  const ToRender = entry.render;
   bus.emit('set_entry_source', reactElementToJSXString(entry.render()));
-
-  return <Layout>{entry.render()}</Layout>;
+  return (
+    <Layout>
+      <ToRender />
+    </Layout>
+  );
 }
 
 function renderPreview() {
