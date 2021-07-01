@@ -32,15 +32,15 @@ style.innerHTML = `
 
 document.head.appendChild(style);
 previewCallback();
+
+// Pulls a unique id from the parent window to namespace the event emitter
+// See: src/ui/index.js
 const syncElem = window.parent.document.getElementById('sync_id');
 const bus = createPageBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
 
 function Preview({ layout: Layout = require('./layout'), home: Home = require('./home') } = {}) {
   const { path } = qs.parse(window.location.search);
   const entry = api.getEntry(path);
-
-  // Pulls a unique id from the parent window to namespace the event emitter
-  // See: src/ui/index.js
 
   bus.emit('set_entries', api.getMetadata());
   bus.on('load_entry', (search) => {
