@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import qs from 'query-string';
 import reactElementToJSXString from 'react-element-to-jsx-string';
-import useBus from '../hooks/useBus';
+import { createPageBus } from '../hooks/useBus';
 import { api } from '../api';
 import previewCallback from '__LIBBY_PREVIEW__';
 import ErrorDisplay from './error';
@@ -32,6 +32,8 @@ style.innerHTML = `
 
 document.head.appendChild(style);
 previewCallback();
+const syncElem = window.parent.document.getElementById('sync_id');
+const bus = createPageBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
 
 function Preview({ layout: Layout = require('./layout'), home: Home = require('./home') } = {}) {
   const { path } = qs.parse(window.location.search);
@@ -39,8 +41,6 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
 
   // Pulls a unique id from the parent window to namespace the event emitter
   // See: src/ui/index.js
-  const syncElem = window.parent.document.getElementById('sync_id');
-  const bus = useBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
 
   bus.emit('set_entries', api.getMetadata());
   bus.on('load_entry', (search) => {
@@ -57,13 +57,9 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
     );
   }
 
-  const ToRender = entry.render;
+  const render = React.createElement(entry.render);
   bus.emit('set_entry_source', reactElementToJSXString(entry.render()));
-  return (
-    <Layout>
-      <ToRender />
-    </Layout>
-  );
+  return <Layout>{render}</Layout>;
 }
 
 function renderPreview() {
