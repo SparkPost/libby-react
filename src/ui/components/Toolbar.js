@@ -21,12 +21,12 @@ function Toolbar(props) {
 
   return (
     <Inline space="300">
-      <Button onClick={toggleSource} title="Toggle source code">
+      {/* <Button onClick={toggleSource} title="Toggle source code">
         <IconWrapper>
           <Code />
           <ScreenReaderOnly>Toggle source code</ScreenReaderOnly>
         </IconWrapper>
-      </Button>
+      </Button> */}
 
       <Button onClick={cycle} title="Cycle backgrond color">
         <IconWrapper>

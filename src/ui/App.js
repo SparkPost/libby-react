@@ -106,12 +106,15 @@ function App() {
               height="100%"
             />
           </StyledPreviewWrapper>
+          {/*
+          // TODO Fix this in the future – follow up to UX-600
+          // Source code is broken 
           {sourceContext.show ? (
             <>
               {/*
                 Resize event handlers don't work when over an iframe, because they are not part of the "window"
                 So we add a hidden box here when resizing so mousemove is picked up
-              */}
+              
               {resizing && (
                 <Box
                   position="absolute"
@@ -132,7 +135,7 @@ function App() {
                 code={entrySource}
               />
             </>
-          ) : null}
+          ) : null} */}
         </StyledResizeWrapper>
       </Box>
     </Box>

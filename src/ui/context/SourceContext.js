@@ -4,7 +4,7 @@ const SourceContext = React.createContext({});
 
 export function SourceContextProvider(props) {
   const { children } = props;
-  const [show, setShow] = React.useState(true);
+  const [show, setShow] = React.useState(false);
   const [orientation, seetOrientation] = React.useState('horizontal');
 
   const toggleShow = React.useCallback(() => {
