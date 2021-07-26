@@ -58,7 +58,10 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
   }
 
   const render = React.createElement(entry.render);
-  bus.emit('set_entry_source', reactElementToJSXString(entry.render()));
+  // TODO Fix this in the future – follow up to UX-600
+  // This breaks certain stories, unclear why
+  // reactElementToJSXString does not fully support certain stories with hooks, e.g. Tabs stories
+  // bus.emit('set_entry_source', reactElementToJSXString(entry.render()));
   return <Layout>{render}</Layout>;
 }
 
