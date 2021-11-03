@@ -1,7 +1,4 @@
 import React from 'react';
-import qs from 'query-string';
-import { navigate } from '@reach/router';
-import Box from '@sweatpants/box';
 import Inline from '@sweatpants/inline';
 import ScreenReaderOnly from '@sweatpants/screenreaderonly';
 import useWindow from '../hooks/useWindow';
@@ -21,12 +18,12 @@ function Toolbar(props) {
 
   return (
     <Inline space="300">
-      {/* <Button onClick={toggleSource} title="Toggle source code">
+      <Button onClick={toggleSource} title="Toggle source code">
         <IconWrapper>
           <Code />
           <ScreenReaderOnly>Toggle source code</ScreenReaderOnly>
         </IconWrapper>
-      </Button> */}
+      </Button>
 
       <Button onClick={cycle} title="Cycle backgrond color">
         <IconWrapper>
