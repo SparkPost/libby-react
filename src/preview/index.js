@@ -38,6 +38,15 @@ previewCallback();
 const syncElem = window.parent.document.getElementById('sync_id');
 const bus = createPageBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
 
+function convertRenderToString(render) {
+  try {
+    return reactElementToJSXString(render());
+  } catch (e) {
+    console.log(e);
+    return 'Something went wrong.';
+  }
+}
+
 function Preview({ layout: Layout = require('./layout'), home: Home = require('./home') } = {}) {
   const { path } = qs.parse(window.location.search);
   const entry = api.getEntry(path);
@@ -58,10 +67,9 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
   }
 
   const render = React.createElement(entry.render);
-  // TODO Fix this in the future – follow up to UX-600
   // This breaks certain stories, unclear why
   // reactElementToJSXString does not fully support certain stories with hooks, e.g. Tabs stories
-  // bus.emit('set_entry_source', reactElementToJSXString(entry.render()));
+  bus.emit('set_entry_source', convertRenderToString(entry.render));
   return <Layout>{render}</Layout>;
 }
 
