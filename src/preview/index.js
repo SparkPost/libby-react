@@ -51,6 +51,7 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
   const { path } = qs.parse(window.location.search);
   const entry = api.getEntry(path);
 
+  bus.removeAllListeners();
   bus.emit('set_entries', api.getMetadata());
   bus.on('load_entry', (search) => {
     if (search && window.location.search !== search) {

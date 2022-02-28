@@ -43,6 +43,8 @@ function App() {
   const environment = useWindow();
   const searchString = environment?.location?.search;
 
+  bus.removeAllListeners();
+
   bus.on('set_entries', (d) => {
     setInitialized(true);
     setNavItems(d);
