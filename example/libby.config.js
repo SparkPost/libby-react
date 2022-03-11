@@ -3,7 +3,7 @@ module.exports = {
   title: 'Libby Example',
   home: '.libby/home.js',
   port: 9003,
-  outputPath: 'dist/libby-example',
+  outputPath: 'dist',
   backgrounds: {
     default: 'gray',
     values: [
