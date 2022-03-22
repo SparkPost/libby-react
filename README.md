@@ -7,6 +7,12 @@ Libby is a focused, no-frills React component development tool, similar to Story
 - [matchbox-libby.netlify.app/](https://matchbox-libby.netlify.app/)
 - [libby.netlify.app/](https://libby.netlify.app/)
 
+#### Why
+
+Storybook is slow and ships with a lot of features that we don't need. We wanted something performant, lightweight, with slim dependencies. Some benchmarking of build times with 1,000 React component stories:
+
+<img width="685" alt="Benchmark" src="https://user-images.githubusercontent.com/3903325/159557294-827d5456-fe51-4541-ada5-912b53b4d419.png">
+
 ---
 
 ### Getting Started
