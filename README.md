@@ -63,8 +63,8 @@ Add the following scripts to your `package.json` file:
 ```js
 // package.json
 "scripts": {
-  "libby:start": "libby start",
-  "libby:build": "libby build"
+  "start": "libby start",
+  "build": "libby build"
 }
 ```
 
