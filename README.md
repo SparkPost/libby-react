@@ -71,7 +71,7 @@ Add the following scripts to your `package.json` file:
 Run libby:
 
 ```bash
-npm run libby:start
+npm run start
 ```
 
 Create an entry:
