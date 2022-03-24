@@ -7,12 +7,18 @@ Libby is a focused, no-frills React component development tool, similar to Story
 - [matchbox-libby.netlify.app/](https://matchbox-libby.netlify.app/)
 - [libby.netlify.app/](https://libby.netlify.app/)
 
-#### Why
+### Motivation
 
-Storybook is slow and ships with a lot of features that we don't need. We wanted something performant, lightweight, with slim dependencies. Some benchmarking of build times with 1,000 React component stories:
+Storybook is slow and ships with a lot of features that we don't need. We wanted something performant, lightweight, with slim dependencies. Benchmarking shown here was done with 1,000 stories with a single `<div/>`, on a 2019 MBP i7 2.6GHz. Both setups are using default configs.
+
+Libby is over **20x** faster than Storybook at starting up, and is **4x** faster at a production build.
+
+Final bundled size is **492 KB** for Libby, compared to **5.6 MB** for Storybook.
+
+<img width="659" alt="Screen Shot 2022-03-23 at 8 15 29 PM" src="https://user-images.githubusercontent.com/3903325/159817365-be0b0d96-cb6f-473f-abac-17d7102aa712.png">
 
 
-<img width="642" alt="bench" src="https://user-images.githubusercontent.com/3903325/159795587-887da9a6-83cf-4bc8-883d-142e7f96b8e5.png">
+
 
 ---
 
@@ -79,10 +85,10 @@ Create an entry:
 
 ```js
 import React from 'react';
-import { describe, it } from '@sparkpost/libby-react';
+import { describe, add, it } from '@sparkpost/libby-react';
 
 describe('My Component', () => {
-  it('renders correctly', () => <div>This is a React component!</div>);
+  add('Renders', () => <div>This is a React component!</div>);
 });
 ```
 
