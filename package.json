@@ -93,5 +93,9 @@
   },
   "engines": {
     "npm": "8.12.1"
+  },
+  "overrides": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }
