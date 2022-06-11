@@ -1,6 +1,6 @@
 import config from '__LIBBY_CONFIG__';
 import React from 'react';
-import { Router } from '@reach/router';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import Theme from '@sweatpants/theme';
 import Box from '@sweatpants/box';
 import styled from 'styled-components';
@@ -35,13 +35,14 @@ function App() {
   const [entrySource, setEntrySource] = React.useState('');
   const inputRef = React.useRef();
   const bus = useBus(document.getElementById('sync_id').getAttribute('data-id'));
+  const location = useLocation();
 
   const { resizeYProps, resizeXProps, width, height, resizing } = useSource({
     orientation: sourceContext.orientation
   });
 
   const environment = useWindow();
-  const searchString = environment?.location?.search;
+  const searchString = location.search;
 
   bus.removeAllListeners();
 
@@ -147,12 +148,13 @@ function Wrapper() {
     <BackgroundContextProvider>
       <SourceContextProvider>
         <Theme theme={theme}>
-          <Router>
+          <BrowserRouter>
             <App path="/" />
-          </Router>
+          </BrowserRouter>
         </Theme>
       </SourceContextProvider>
     </BackgroundContextProvider>
   );
 }
+
 export default Wrapper;

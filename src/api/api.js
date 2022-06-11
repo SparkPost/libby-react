@@ -1,3 +1,5 @@
+import { dynamicImport } from '../utils';
+
 function slug(str) {
   return str.replace(/[^a-zA-Z0-9]+/g, '-');
 }
@@ -13,16 +15,18 @@ export class Libby {
     this.kind = 'root';
   }
 
-  configure(include) {
-    function load(context) {
-      const keys = context.keys();
+  async configure() {
+    try {
+      const entries = __LIBBY_ENTRIES__;
 
-      keys.forEach((key) => {
-        context(key);
-      });
+      for (const entry of entries) {
+        await dynamicImport(entry);
+      }
+    } catch (e) {
+      console.error('Error importing Libby entries');
     }
 
-    load(include);
+    return;
   }
 
   add(name, render) {

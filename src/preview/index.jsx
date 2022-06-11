@@ -7,11 +7,11 @@ import { api } from '../api';
 import previewCallback from '__LIBBY_PREVIEW__';
 import ErrorDisplay from './error';
 import { ErrorBoundary } from 'react-error-boundary';
+import Layout from '__LIBBY_LAYOUT__';
 
-const out = document.createElement('div');
-document.body.append(out);
-
+const out = document.getElementById('root');
 const style = document.createElement('style');
+
 style.innerHTML = `
   body { font-size: 16px; margin: 0; }
   * { box-sizing: border-box; }
@@ -42,12 +42,12 @@ function convertRenderToString(render) {
   try {
     return reactElementToJSXString(render());
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return 'Something went wrong.';
   }
 }
 
-function Preview({ layout: Layout = require('./layout'), home: Home = require('./home') } = {}) {
+function Preview() {
   const { path } = qs.parse(window.location.search);
   const entry = api.getEntry(path);
 
@@ -60,11 +60,7 @@ function Preview({ layout: Layout = require('./layout'), home: Home = require('.
   });
 
   if (!entry) {
-    return (
-      <Layout>
-        <Home />
-      </Layout>
-    );
+    return <Layout></Layout>;
   }
 
   const render = React.createElement(entry.render);
@@ -83,10 +79,6 @@ function renderPreview() {
   );
 }
 
-renderPreview();
-
-if (module.hot) {
-  module.hot.accept('../api', () => {
-    renderPreview();
-  });
-}
+api.configure().then(() => {
+  renderPreview();
+});

@@ -1,9 +1,8 @@
 import React from 'react';
-import createBus from 'page-bus';
+import PageBus from '../api/pagebus';
 
 export function createPageBus(syncId = '') {
-  const bus = createBus(`libby-react-${syncId}`);
-  return bus;
+  return new PageBus(`libby-react-${syncId}`);
 }
 
 function useBus(syncId = '') {

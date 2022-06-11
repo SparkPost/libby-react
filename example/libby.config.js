@@ -1,5 +1,5 @@
-module.exports = {
-  entries: () => require.context('./src', true, /\.libby\.js$/),
+export default {
+  entries: 'src/**/*.libby.jsx',
   title: 'Libby Example',
   home: '.libby/home.js',
   port: 9003,
