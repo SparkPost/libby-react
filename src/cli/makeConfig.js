@@ -11,7 +11,12 @@ const root = resolve(__dirname, '../..');
 export const makeConfig = (userConfig) => {
   const config = defineConfig({
     root: root,
-    plugins: [react()],
+    plugins: [
+      react({
+        // Force reloads
+        exclude: /\.(libby|stories)\.(t|j)sx?$/
+      })
+    ],
     define: {
       __LIBBY_ENTRIES__: JSON.stringify(glob.sync(userConfig.entries, { absolute: true }))
     },

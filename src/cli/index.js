@@ -8,7 +8,7 @@ function makeDefaultConfig(userConfig) {
     openBrowser: true,
     port: 9000,
     outputPath: 'dist/libby',
-    entries: 'src/**/*.libby.jsx',
+    entries: 'src/**/*.libby.{jsx,tsx}',
     ...userConfig
   };
 }
