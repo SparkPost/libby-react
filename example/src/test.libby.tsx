@@ -1,4 +1,3 @@
-import React from 'react';
 import { add, describe } from '@sparkpost/libby-react';
 
 const Component: React.FC<{ children?: React.ReactNode }> = (props): JSX.Element => {
