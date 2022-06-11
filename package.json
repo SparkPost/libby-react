@@ -42,9 +42,6 @@
   },
   "homepage": "https://github.com/SparkPost/libby-react#readme",
   "dependencies": {
-    "@originjs/vite-plugin-require-context": "^1.0.9",
-    "@rollup/plugin-alias": "^3.1.9",
-    "@rollup/plugin-dynamic-import-vars": "^1.4.3",
     "@styled-system/css": "^5.1.5",
     "@sweatpants/box": "0.0.5",
     "@sweatpants/button": "0.0.5",
@@ -58,8 +55,6 @@
     "events": "^3.3.0",
     "find-up": "^6.3.0",
     "glob": "^8.0.3",
-    "html-webpack-plugin": "^5.5.0",
-    "json-parse-better-errors": "^1.0.2",
     "meow": "^10.1.2",
     "query-string": "^7.1.1",
     "react-element-to-jsx-string": "^15.0.0",
@@ -69,9 +64,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "rimraf": "^3.0.2",
     "styled-components": "^5.3.5",
-    "vite": "^2.9.12",
-    "vite-plugin-glob": "^0.3.2",
-    "vite-plugin-html": "^3.2.0"
+    "vite": "^2.9.12"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
