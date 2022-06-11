@@ -67,8 +67,8 @@
     "vite": "^2.9.12"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
@@ -87,8 +87,8 @@
     "husky": "^7.0.2",
     "lint-staged": "^10.5.1",
     "prettier": "^2.6.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "rollup": "^2.75.6"
   },
   "engines": {

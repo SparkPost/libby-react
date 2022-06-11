@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import qs from 'query-string';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createPageBus } from '../hooks/useBus';
@@ -70,12 +70,12 @@ function Preview() {
   return <Layout>{render}</Layout>;
 }
 
+const root = createRoot(out);
 function renderPreview() {
-  ReactDOM.render(
+  root.render(
     <ErrorBoundary FallbackComponent={ErrorDisplay}>
       <Preview />
-    </ErrorBoundary>,
-    out
+    </ErrorBoundary>
   );
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 
 const out = document.getElementById('root');
@@ -39,8 +39,10 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
+const root = createRoot(out);
+
 function renderApp() {
-  ReactDOM.render(<App />, out);
+  root.render(<App />);
 }
 
 renderApp();
