@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import css from '@styled-system/css';
+import { focusRing } from '../styles/focusRing';
 
 const StyledInput = styled.input`
   display: block;
@@ -17,9 +18,7 @@ const StyledInput = styled.input`
     bg: 'gray.200'
   })}
 
-  &:focus-visible {
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.blue};
-  }
+  ${focusRing}
 `;
 
 const Input = React.forwardRef(function Input(props, ref) {

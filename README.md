@@ -82,19 +82,7 @@ export default {
   /**
    * Custom backgrounds for your stories
    */
-  backgrounds: {
-    default: 'white',
-    values: [
-      {
-        name: 'white',
-        value: '#ffffff'
-      },
-      {
-        name: 'gray',
-        value: '#ebf0f5'
-      }
-    ]
-  }
+  backgrounds: ['#ffffff', '#ffccd5', '#ebf0f5']
 };
 ```
 

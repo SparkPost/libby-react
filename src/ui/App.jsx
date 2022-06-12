@@ -25,6 +25,7 @@ import useSource from './hooks/useSource';
 import Navigation from './components/Navigation';
 import Input from './components/Input';
 import Toolbar from './components/Toolbar';
+import SkipToContent from './components/SkipToContent';
 
 const StyledPreviewWrapper = styled(Box)`
   transition: background 0.1s;
@@ -205,6 +206,7 @@ function Wrapper() {
     <BackgroundContextProvider>
       <SourceContextProvider>
         <SweatpantsProvider theme={theme}>
+          <SkipToContent />
           <BrowserRouter>
             <RouteHandler />
           </BrowserRouter>
