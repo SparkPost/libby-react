@@ -30,18 +30,58 @@ npm i libby-react
 Create a `libby.config.js` file to the root directory of your project:
 
 ```js
-// libby.config.js
 export default {
-  // All are optional
+  /**
+   * Output path for the build
+   */
   outputPath: 'dist',
-  layout: '.libby/layout.js',
-  preview: '.libby/preview.js',
+
+  /**
+   * Path to a custom wrapper for all stories
+   * A react component must be the default export
+   */
+  layout: 'path/to/custom/layout.js',
+
+  /**
+   * Any other JS that needs to run before stories are mounted
+   * A function must be the default export
+   */
+  preview: 'path/to/custom/preview.js',
+
+  /**
+   * Opens the browser when running the Vite server
+   */
   openBrowser: true,
+
+  /**
+   * Specifies a port to when running the Vite server
+   */
   port: 9000,
+
+  /**
+   * Custom page title
+   */
   title: 'Page Title',
-  vite: {
-    // Custom Vite config goes here
+
+  /**
+   * Custom Vite config
+   * `root` and `resolve` are provided for you
+   * `root` is a reference to your workspace, aka `__dirname`
+   * `resolve` is `path.resolve`
+   */
+  vite: ({ root, resolve }) => {
+    return {
+      resolve: {
+        alias: {
+          '@': resolve(root, 'src/components')
+        }
+      }
+    };
   },
+
+  /**
+   * Custom backgrounds for your stories
+   */
   backgrounds: {
     default: 'white',
     values: [
@@ -74,14 +114,17 @@ Run libby:
 npm run start
 ```
 
-Create an entry:
+Create a story:
 
-```js
-// Component.libby.jsx
+```jsx
+/**
+ * File names match this glob pattern
+ * `*.{stories,libby}.{jsx,js,tsx,ts}`
+ */
 import { describe, add, it } from '@sparkpost/libby-react';
 
 describe('My Component', () => {
-  add('Renders', () => <div>This is a React component!</div>);
+  add('Default', () => <div>This is a React component!</div>);
 });
 ```
 
