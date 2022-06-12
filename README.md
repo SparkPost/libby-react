@@ -77,7 +77,6 @@ npm run start
 Create an entry:
 
 ```js
-import React from 'react';
 import { describe, add, it } from '@sparkpost/libby-react';
 
 describe('My Component', () => {

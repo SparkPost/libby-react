@@ -1,15 +1,15 @@
+import { performance } from 'perf_hooks';
 import { build } from 'vite';
 import { makeConfig } from './makeConfig';
 import { resolve } from 'path';
 import chalk from 'chalk';
 
 export default async (config, callback) => {
-  console.log();
-  console.log(chalk.green.bold('Building Libby'));
-  console.log();
+  console.log(chalk.green.bold('\nBuilding Libby\n'));
 
   try {
-    const viteConfig = makeConfig(config);
+    performance.mark('build-start');
+    const viteConfig = makeConfig(config, true);
 
     await build({
       ...viteConfig,
@@ -17,8 +17,19 @@ export default async (config, callback) => {
       configFile: false
     });
 
-    console.log();
-    console.log(chalk.green('→ ' + resolve(config.cwd, config.outputPath)));
+    console.log(
+      '\n' + chalk.gray(resolve(config.cwd, config.outputPath))
+    );
+
+    performance.mark('build-end');
+    const { duration } = performance.measure(
+      'build',
+      'build-start',
+      'build-end'
+    );
+    console.log(
+      chalk.gray(`Built in ${(duration / 1000).toFixed(2)}s`)
+    );
   } catch (e) {
     callback(e);
   }

@@ -46,7 +46,9 @@ async function libby(command, flags) {
   const configPath = await findUp('libby.config.js');
 
   if (!configPath) {
-    console.error('Please add libby.config.js to the root directory your project.');
+    console.error(
+      'Please add libby.config.js to the root directory your project.'
+    );
     process.exit(1);
   }
 

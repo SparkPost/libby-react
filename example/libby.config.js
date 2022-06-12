@@ -1,5 +1,4 @@
 export default {
-  entries: 'src/**/*.libby.{jsx,tsx}',
   title: 'Libby Example',
   home: '.libby/home.js',
   port: 9003,

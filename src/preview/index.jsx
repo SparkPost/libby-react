@@ -16,8 +16,9 @@ style.innerHTML = `
   body { font-size: 16px; margin: 0; }
   * { box-sizing: border-box; }
 
-  #libby-error, #libby-error-stack {
-    color: #FF2222;
+  #libby-error, #libby-error-stack, .libby-error-button {
+    color: #2c353d;
+    line-height: 1.5em;
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
   }
   #libby-error {
@@ -25,8 +26,35 @@ style.innerHTML = `
     font-weight: bold;
   }
   #libby-error-stack {
-    margin-top: 10px;
-    font-size: 11px;
+    margin-top: 1rem;
+    font-size: 12px;    
+  }
+  #libby-error-container {
+    padding: 1rem;
+    border-radius: 5px;
+    background: #ebf0f5;
+    overflow: auto;
+  }
+  .libby-error-button {
+    border: none;
+    border-radius: 3px;
+    margin: 0 1rem 1rem 0;
+    padding: 0.5rem 1rem;
+    width: auto;
+    overflow: visible;
+    background: #ebf0f5;
+    color: #2c353d;
+    font: inherit;
+    line-height: normal;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.15s;
+  }
+  .libby-error-button:hover {
+    background: #d9e0e6;
   }
 `;
 
@@ -36,7 +64,9 @@ previewCallback();
 // Pulls a unique id from the parent window to namespace the event emitter
 // See: src/ui/index.js
 const syncElem = window.parent.document.getElementById('sync_id');
-const bus = createPageBus(syncElem ? syncElem.getAttribute('data-id') : new Date().getTime());
+const bus = createPageBus(
+  syncElem ? syncElem.getAttribute('data-id') : new Date().getTime()
+);
 
 function convertRenderToString(render) {
   try {

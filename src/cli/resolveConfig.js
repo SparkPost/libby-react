@@ -1,14 +1,19 @@
 import fs from 'fs';
 import { pathToFileURL } from 'url';
 import { build } from 'esbuild';
-import { dynamicImport } from '../utils';
+
+export const dynamicImport = new Function(
+  'file',
+  'return import(file)'
+);
 
 export const loadConfigFromFile = async (configPath) => {
   try {
     const fileUrl = pathToFileURL(configPath);
     const bundled = await bundleConfigFile(configPath);
     fs.writeFileSync(configPath + '.bundled.js', bundled);
-    const userConfig = (await dynamicImport(`${fileUrl}.bundled.js`)).default.default;
+    const userConfig = (await dynamicImport(`${fileUrl}.bundled.js`))
+      .default.default;
     fs.unlinkSync(configPath + '.bundled.js');
     return userConfig;
   } catch (e) {

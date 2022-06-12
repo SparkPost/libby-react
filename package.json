@@ -54,7 +54,6 @@
     "esbuild": "^0.14.43",
     "events": "^3.3.0",
     "find-up": "^6.3.0",
-    "glob": "^8.0.3",
     "meow": "^10.1.2",
     "query-string": "^7.1.1",
     "react-element-to-jsx-string": "^15.0.0",

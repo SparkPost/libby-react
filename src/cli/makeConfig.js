@@ -2,26 +2,24 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig, mergeConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import glob from 'glob';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const root = resolve(__dirname, '../..');
 
-export const makeConfig = (userConfig) => {
+export const makeConfig = (userConfig, isProduction) => {
   const config = defineConfig({
     root: root,
     plugins: [
       react({
-        // Force reloads
-        exclude: /\.(libby|stories)\.(t|j)sx?$/
+        fastRefresh: false
+        // Do not treat story files as HMR boundaries
+        // exclude: [/\.(libby|stories)\.(t|j)sx?$/, /node_modules/, /dist/]
       })
     ],
-    define: {
-      __LIBBY_ENTRIES__: JSON.stringify(glob.sync(userConfig.entries, { absolute: true }))
-    },
     resolve: {
       alias: {
+        __LIBBY_CWD__: userConfig.cwd,
         __LIBBY_CONFIG__: resolve(userConfig.cwd, 'libby.config.js'),
         __LIBBY_PREVIEW__: userConfig.preview
           ? resolve(userConfig.cwd, userConfig.preview)
@@ -39,10 +37,15 @@ export const makeConfig = (userConfig) => {
           iframe: resolve(root, 'iframe.html')
         },
         output: {
-          entryFileNames: '[name].js',
+          entryFileNames: isProduction
+            ? '[name].[hash].js'
+            : '[name].js',
           dir: resolve(userConfig.cwd, userConfig.outputPath)
         }
-      }
+      },
+      reportCompressedSize: false,
+      chunkSizeWarningLimit: 1000,
+      sourcemap: isProduction
     }
   });
 

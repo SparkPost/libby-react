@@ -5,10 +5,11 @@ import { loadConfigFromFile } from './resolveConfig';
 
 function makeDefaultConfig(userConfig) {
   return {
+    // Entries is not configurable
+    // entries: 'src/**/*.{libby,stories}.{jsx,tsx,js,ts}'
     openBrowser: true,
     port: 9000,
     outputPath: 'dist/libby',
-    entries: 'src/**/*.libby.{jsx,tsx}',
     ...userConfig
   };
 }
