@@ -77,6 +77,7 @@ npm run start
 Create an entry:
 
 ```js
+// Component.libby.jsx
 import { describe, add, it } from '@sparkpost/libby-react';
 
 describe('My Component', () => {
