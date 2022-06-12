@@ -44,7 +44,6 @@
   "dependencies": {
     "@styled-system/css": "^5.1.5",
     "@sweatpants/box": "0.0.5",
-    "@sweatpants/button": "0.0.5",
     "@sweatpants/inline": "0.0.5",
     "@sweatpants/screenreaderonly": "0.0.5",
     "@sweatpants/stack": "0.0.5",
