@@ -69,7 +69,7 @@ export default {
    * `root` is a reference to your workspace, aka `__dirname`
    * `resolve` is `path.resolve`
    */
-  vite: ({ root, resolve }) => {
+  vite: ({ root, resolve, isProduction }) => {
     return {
       resolve: {
         alias: {
