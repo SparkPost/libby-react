@@ -43,11 +43,11 @@
   "homepage": "https://github.com/SparkPost/libby-react#readme",
   "dependencies": {
     "@styled-system/css": "^5.1.5",
-    "@sweatpants/box": "0.0.5",
-    "@sweatpants/inline": "0.0.5",
-    "@sweatpants/screenreaderonly": "0.0.5",
-    "@sweatpants/stack": "0.0.5",
-    "@sweatpants/theme": "0.0.5",
+    "@sweatpants/box": "0.0.6",
+    "@sweatpants/inline": "0.0.6",
+    "@sweatpants/screenreaderonly": "0.0.6",
+    "@sweatpants/stack": "0.0.6",
+    "@sweatpants/theme": "0.0.6",
     "@vitejs/plugin-react": "^1.3.2",
     "chalk": "^5.0.1",
     "esbuild": "^0.14.43",
@@ -92,9 +92,5 @@
   },
   "engines": {
     "npm": "8.12.1"
-  },
-  "overrides": {
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
   }
 }
