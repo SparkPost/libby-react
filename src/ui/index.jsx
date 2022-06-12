@@ -17,7 +17,7 @@ style.innerHTML = `
 
   #libby-source .linenumber.react-syntax-highlighter-line-number {
     font-style: normal !important;
-    font-size: 12px !important;
+    font-size: 10px !important;
     padding-right: 20px !important;
     color: #a2adb8 !important;
   }
@@ -28,13 +28,13 @@ style.innerHTML = `
 
   #libby-source pre {
     border-radius: 5px !important;
-    border: 1px solid #d9e0e6 !important;
+    border: 1px solid #ebf0f5 !important;
     margin: 0 !important;
     background: white;
     height: 100% !important;
     padding: 24px !important;
-    font-size: 14px !important;
-    line-height: 22px !important;
+    font-size: 13px !important;
+    line-height: 1.45em !important;
   }
 `;
 document.head.appendChild(style);
@@ -46,3 +46,7 @@ function renderApp() {
 }
 
 renderApp();
+
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}

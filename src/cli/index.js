@@ -10,6 +10,7 @@ function makeDefaultConfig(userConfig) {
     openBrowser: true,
     port: 9000,
     outputPath: 'dist/libby',
+    vite: () => {},
     ...userConfig
   };
 }

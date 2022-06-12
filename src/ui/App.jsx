@@ -1,6 +1,12 @@
 import config from '__LIBBY_CONFIG__';
 import React from 'react';
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useSearchParams
+} from 'react-router-dom';
 import { SweatpantsProvider } from '@sweatpants/theme';
 import { Box } from '@sweatpants/box';
 import styled from 'styled-components';
@@ -33,7 +39,7 @@ const StyledResizeWrapper = styled(Box)`
       : ''};
 `;
 
-function App() {
+function App({ path }) {
   const { value: backgroundValue } =
     React.useContext(BackgroundContext);
   const sourceContext = React.useContext(SourceContext);
@@ -46,7 +52,6 @@ function App() {
   const bus = useBus(
     document.getElementById('sync_id').getAttribute('data-id')
   );
-  const location = useLocation();
 
   const { resizeYProps, resizeXProps, width, height, resizing } =
     useSource({
@@ -54,7 +59,6 @@ function App() {
     });
 
   const environment = useWindow();
-  const searchString = location.search;
 
   bus.removeAllListeners();
 
@@ -63,7 +67,7 @@ function App() {
     setNavItems(d);
   });
 
-  bus.emit('load_entry', searchString);
+  bus.emit('load_entry', path);
 
   bus.on('set_entry_source', (d) => {
     setEntrySource(d);
@@ -165,7 +169,7 @@ function App() {
                   bottom="0"
                   right="0"
                   bg="transparent"
-                ></Box>
+                />
               )}
               <Source
                 width={width}
@@ -184,13 +188,25 @@ function App() {
   );
 }
 
+function RouteHandler() {
+  const [searchParams] = useSearchParams();
+  const path = searchParams.get('path');
+
+  return (
+    <Routes>
+      <Route path="/" element={<App path={path} />} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+  );
+}
+
 function Wrapper() {
   return (
     <BackgroundContextProvider>
       <SourceContextProvider>
         <SweatpantsProvider theme={theme}>
           <BrowserRouter>
-            <App path="/" />
+            <RouteHandler />
           </BrowserRouter>
         </SweatpantsProvider>
       </SourceContextProvider>

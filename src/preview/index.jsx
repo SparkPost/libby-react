@@ -1,6 +1,12 @@
-import React from 'react';
+import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
-import qs from 'query-string';
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useSearchParams
+} from 'react-router-dom';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createPageBus } from '../hooks/useBus';
 import { api } from '../api';
@@ -15,47 +21,6 @@ const style = document.createElement('style');
 style.innerHTML = `
   body { font-size: 16px; margin: 0; }
   * { box-sizing: border-box; }
-
-  #libby-error, #libby-error-stack, .libby-error-button {
-    color: #2c353d;
-    line-height: 1.5em;
-    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
-  }
-  #libby-error {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  #libby-error-stack {
-    margin-top: 1rem;
-    font-size: 12px;    
-  }
-  #libby-error-container {
-    padding: 1rem;
-    border-radius: 5px;
-    background: #ebf0f5;
-    overflow: auto;
-  }
-  .libby-error-button {
-    border: none;
-    border-radius: 3px;
-    margin: 0 1rem 1rem 0;
-    padding: 0.5rem 1rem;
-    width: auto;
-    overflow: visible;
-    background: #ebf0f5;
-    color: #2c353d;
-    font: inherit;
-    line-height: normal;
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-    -webkit-appearance: none;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.15s;
-  }
-  .libby-error-button:hover {
-    background: #d9e0e6;
-  }
 `;
 
 document.head.appendChild(style);
@@ -70,7 +35,11 @@ const bus = createPageBus(
 
 function convertRenderToString(render) {
   try {
-    return reactElementToJSXString(render());
+    return reactElementToJSXString(render(), {
+      maxInlineAttributesLineLength: 70,
+      showDefaultProps: false,
+      functionValue: () => `fn()`
+    });
   } catch (e) {
     console.error(e);
     return 'Something went wrong.';
@@ -78,14 +47,15 @@ function convertRenderToString(render) {
 }
 
 function Preview() {
-  const { path } = qs.parse(window.location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const path = searchParams.get('path');
   const entry = api.getEntry(path);
 
   bus.removeAllListeners();
   bus.emit('set_entries', api.getMetadata());
-  bus.on('load_entry', (search) => {
-    if (search && window.location.search !== search) {
-      window.location.search = search;
+  bus.on('load_entry', (newPath) => {
+    if (newPath && path !== newPath) {
+      setSearchParams({ path: newPath }, { replace: true });
     }
   });
 
@@ -93,7 +63,7 @@ function Preview() {
     return <Layout></Layout>;
   }
 
-  const render = React.createElement(entry.render);
+  const render = createElement(entry.render);
   // This breaks certain stories, unclear why
   // reactElementToJSXString does not fully support certain stories with hooks, e.g. Tabs stories
   bus.emit('set_entry_source', convertRenderToString(entry.render));
@@ -101,10 +71,16 @@ function Preview() {
 }
 
 const root = createRoot(out);
+
 function renderPreview() {
   root.render(
     <ErrorBoundary FallbackComponent={ErrorDisplay}>
-      <Preview />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/iframe.html" element={<Preview />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
     </ErrorBoundary>
   );
 }
@@ -112,3 +88,7 @@ function renderPreview() {
 api.configure().then(() => {
   renderPreview();
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}

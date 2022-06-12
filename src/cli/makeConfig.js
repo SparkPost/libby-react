@@ -10,17 +10,7 @@ const root = resolve(__dirname, '../..');
 export const makeConfig = (userConfig, isProduction) => {
   const config = defineConfig({
     root: root,
-    plugins: [
-      react({
-        // fastRefresh: false
-        // Do not treat story files as HMR boundaries
-        exclude: [
-          /\.(libby|stories)\.(t|j)sx?$/,
-          /node_modules/,
-          /dist/
-        ]
-      })
-    ],
+    plugins: [react()],
     resolve: {
       alias: {
         __LIBBY_CWD__: userConfig.cwd,
@@ -53,5 +43,8 @@ export const makeConfig = (userConfig, isProduction) => {
     }
   });
 
-  return mergeConfig(config, userConfig.vite);
+  return mergeConfig(
+    config,
+    userConfig.vite({ root: userConfig.cwd, resolve })
+  );
 };

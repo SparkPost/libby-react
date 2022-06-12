@@ -1,6 +1,5 @@
 import React from 'react';
-import qs from 'query-string';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import css from '@styled-system/css';
 import { Box } from '@sweatpants/box';
@@ -52,10 +51,9 @@ const NavLi = styled.li`
 function NavEntry(props) {
   const { entry } = props;
   const inputSearchValue = React.useContext(SearchContext);
-  const location = useLocation();
-  const search = location.search;
+  const [searchParams] = useSearchParams();
 
-  const { path: selectedKey } = qs.parse(search);
+  const selectedKey = searchParams.get('path');
   const stringToSearch = getSearchableString(entry.key);
 
   if (
@@ -67,7 +65,7 @@ function NavEntry(props) {
 
   return (
     <NavLi selected={selectedKey === entry.key}>
-      <Link to={`?path=${entry.key}`}>{entry.name}</Link>
+      <Link to={`/?path=${entry.key}`}>{entry.name}</Link>
     </NavLi>
   );
 }

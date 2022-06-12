@@ -17,7 +17,10 @@ export default async (config, callback) => {
       server: {
         port: config.port,
         open: config.openBrowser,
-        host: true
+        host: true,
+        fs: {
+          strict: false
+        }
       }
     });
 

@@ -54,7 +54,6 @@
     "events": "^3.3.0",
     "find-up": "^6.3.0",
     "meow": "^10.1.2",
-    "query-string": "^7.1.1",
     "react-element-to-jsx-string": "^15.0.0",
     "react-error-boundary": "^3.1.4",
     "react-router": "^6.3.0",
