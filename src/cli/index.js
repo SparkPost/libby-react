@@ -11,6 +11,7 @@ function makeDefaultConfig(userConfig) {
     port: 9000,
     outputPath: 'dist/libby',
     vite: () => {},
+    backgrounds: ['#ffffff', '#ffccd5'],
     ...userConfig
   };
 }

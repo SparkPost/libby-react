@@ -1,16 +1,53 @@
-import React from 'react';
+import { useState, useContext, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import css from '@styled-system/css';
 import { Box } from '@sweatpants/box';
 import { Stack } from '@sweatpants/stack';
 import SearchContext from '../context/SearchContext';
+import { focusRing } from '../styles/focusRing';
 import Button from './Button';
 import Chevron from './icons/Chevron';
 import Skeleton from './Skeleton';
 
 function getSearchableString(str) {
   return str.replace('-', ' ').replace('__', ' ').toLowerCase();
+}
+
+function searchEntries(entries, inputSearchValue) {
+  return entries.reduce((acc, entry) => {
+    const stringToSearch = getSearchableString(entry.key);
+    return acc || stringToSearch.includes(inputSearchValue);
+  }, false);
+}
+
+function searchKinds(kinds, inputSearchValue) {
+  return Object.keys(kinds).reduce((acc, folderKind) => {
+    const hasKinds = kinds[folderKind].kinds;
+    const hasEntries =
+      kinds[folderKind].entries && kinds[folderKind].entries.length;
+
+    if (acc) {
+      return true;
+    }
+
+    if (getSearchableString(folderKind).includes(inputSearchValue)) {
+      return true;
+    }
+
+    if (hasEntries) {
+      acc = searchEntries(
+        kinds[folderKind].entries,
+        inputSearchValue
+      );
+    }
+
+    if (hasKinds && !acc) {
+      acc = searchKinds(kinds[folderKind].kinds, inputSearchValue);
+    }
+
+    return acc;
+  }, false);
 }
 
 const NavLi = styled.li`
@@ -37,20 +74,20 @@ const NavLi = styled.li`
       selected
         ? css({ color: 'blue', bg: 'rgba(18,115,230, 0.15)' })
         : null}
+    &:only-child {
+      margin-bottom: 0;
+    }
+    ${focusRing}
   }
 
   a:hover {
     ${css({ bg: 'gray.200' })}
   }
-
-  a:focus-visible {
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.blue};
-  }
 `;
 
 function NavEntry(props) {
   const { entry } = props;
-  const inputSearchValue = React.useContext(SearchContext);
+  const inputSearchValue = useContext(SearchContext);
   const [searchParams] = useSearchParams();
 
   const selectedKey = searchParams.get('path');
@@ -72,10 +109,10 @@ function NavEntry(props) {
 
 function NavFolder(props) {
   const { kind, item, pl } = props;
-  const [show, setShow] = React.useState(false);
-  const inputSearchValue = React.useContext(SearchContext);
+  const [show, setShow] = useState(false);
+  const inputSearchValue = useContext(SearchContext);
 
-  const containsSearchItem = React.useMemo(() => {
+  const containsSearchItem = useMemo(() => {
     let contains = false;
 
     // Checks if anything is being searched
@@ -89,50 +126,14 @@ function NavFolder(props) {
       return true;
     }
 
-    function searchEntries(entries) {
-      return entries.reduce((acc, entry) => {
-        const stringToSearch = getSearchableString(entry.key);
-        return acc || stringToSearch.includes(inputSearchValue);
-      }, false);
-    }
-
-    function searchKinds(kinds) {
-      return Object.keys(kinds).reduce((acc, folderKind) => {
-        const hasKinds = kinds[folderKind].kinds;
-        const hasEntries =
-          kinds[folderKind].entries &&
-          kinds[folderKind].entries.length;
-
-        if (acc) {
-          return true;
-        }
-
-        if (
-          getSearchableString(folderKind).includes(inputSearchValue)
-        ) {
-          return true;
-        }
-
-        if (hasEntries) {
-          acc = searchEntries(kinds[folderKind].entries);
-        }
-
-        if (hasKinds && !acc) {
-          acc = searchKinds(kinds[folderKind].kinds);
-        }
-
-        return acc;
-      }, false);
-    }
-
     // Checks child entries of this folder
     if (item.entries) {
-      contains = searchEntries(item.entries);
+      contains = searchEntries(item.entries, inputSearchValue);
     }
 
     // Recursively checks kinds of this folder, and all kinds/entries underneath
     if (item.kinds && contains === false) {
-      contains = searchKinds(item.kinds);
+      contains = searchKinds(item.kinds, inputSearchValue);
     }
 
     return contains;
@@ -197,8 +198,16 @@ function NavKind(props) {
 
 function NavRoot(props) {
   const { items = {}, initialized } = props;
+  const inputSearchValue = useContext(SearchContext);
   const { root, ...kinds } = items;
   const rootEntries = items.root ? items.root.entries : [];
+
+  const hide = useMemo(() => {
+    return (
+      !searchEntries(rootEntries, inputSearchValue) &&
+      !searchKinds(kinds, inputSearchValue)
+    );
+  }, [items, inputSearchValue]);
 
   if (!initialized) {
     return (
@@ -217,7 +226,7 @@ function NavRoot(props) {
     );
   }
 
-  if (!Object.keys(items).length) {
+  if (!Object.keys(items).length || hide) {
     return (
       <Box py="300" fontSize="100" color="gray.700">
         No entries found.

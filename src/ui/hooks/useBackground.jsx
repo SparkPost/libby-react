@@ -1,29 +1,21 @@
-import React from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import config from '__LIBBY_CONFIG__';
 
 function useBackground() {
-  const [index, setIndex] = React.useState(0);
-  const backgrounds = config.backgrounds ?? {
-    default: 'white',
-    values: [
-      { name: 'white', value: '#ffffff' },
-      { name: 'black', value: '#000000' }
-    ]
-  };
-  const background = backgrounds.default;
+  const [index, setIndex] = useState(0);
+  const backgrounds = config.backgrounds;
+  const background = backgrounds[0];
 
-  React.useEffect(() => {
-    const values = backgrounds.values;
-    setIndex(values.findIndex(({ name }) => name === background));
-  }, [background, config.backgrounds]);
+  useEffect(() => {
+    setIndex(backgrounds.findIndex((v) => v === background));
+  }, [config.backgrounds]);
 
-  const value = React.useMemo(() => {
-    const values = backgrounds.values;
-    return values[index].value;
+  const value = useMemo(() => {
+    return backgrounds[index];
   }, [index, config.backgrounds]);
 
   function cycleBackground() {
-    const values = backgrounds.values;
+    const values = backgrounds;
     if (index === values.length - 1) {
       setIndex(0);
     } else {

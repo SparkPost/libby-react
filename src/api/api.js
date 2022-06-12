@@ -30,7 +30,7 @@ export class Libby {
         await entries[entry]();
       }
     } catch (e) {
-      console.error('[Libby] Error importing Libby entries');
+      console.error('[libby] Error importing entries.');
     }
 
     return;
