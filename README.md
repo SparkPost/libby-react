@@ -32,16 +32,16 @@ Create a `libby.config.js` file to the root directory of your project:
 ```js
 // libby.config.js
 export default {
-  // Required
-  entries: 'src/**/*.libby.jsx',
-
-  // Optional
+  // All are optional
   outputPath: 'dist',
   layout: '.libby/layout.js',
   preview: '.libby/preview.js',
   openBrowser: true,
   port: 9000,
   title: 'Page Title',
+  vite: {
+    // Custom Vite config goes here
+  },
   backgrounds: {
     default: 'white',
     values: [
