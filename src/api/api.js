@@ -6,8 +6,6 @@ function makeKey(name, kind) {
   return `${slug(kind)}__${slug(name)}`;
 }
 
-const exclude = ['/dist/', '/node_modules/', '/__tests__/'];
-
 export class Libby {
   constructor() {
     this.source = [];
@@ -17,18 +15,22 @@ export class Libby {
 
   async configure() {
     try {
-      const entries = import.meta.glob(
-        `__LIBBY_CWD__/**/*.{stories,libby}.{jsx,js,tsx,ts}`
+      // See https://github.com/antfu/vite-plugin-glob
+      const entries = import.meta.importGlob(
+        [
+          '__LIBBY_CWD__/**/*.{stories,libby}.{jsx,js,tsx,ts}',
+          '!**/node_modules/**',
+          '!**/dist/**',
+          '!**/__tests__/**'
+        ],
+        { exhaustive: true } // includes dot files/directories
       );
 
       for (const entry in entries) {
-        // Manually filtering because vite globs doesnt support glob options
-        if (!exclude.some((s) => entry.includes(s))) {
-          await entries[entry]();
-        }
+        await entries[entry]();
       }
     } catch (e) {
-      console.error('Error importing Libby entries');
+      console.error('[Libby] Error importing Libby entries');
     }
 
     return;

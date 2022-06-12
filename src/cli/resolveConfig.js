@@ -17,7 +17,7 @@ export const loadConfigFromFile = async (configPath) => {
     fs.unlinkSync(configPath + '.bundled.js');
     return userConfig;
   } catch (e) {
-    console.error('Failed to load config file');
+    console.error('[Libby] Failed to load config file');
   }
 
   return {};
