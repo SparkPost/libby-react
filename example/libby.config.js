@@ -1,6 +1,5 @@
 export default {
   title: 'Libby Example',
-  home: '.libby/home.js',
   port: 9003,
   outputPath: 'dist',
   backgrounds: {
