@@ -3,8 +3,8 @@ import qs from 'query-string';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import css from '@styled-system/css';
-import Box from '@sweatpants/box';
-import Stack from '@sweatpants/stack';
+import { Box } from '@sweatpants/box';
+import { Stack } from '@sweatpants/stack';
 import SearchContext from '../context/SearchContext';
 import Button from './Button';
 import Chevron from './icons/Chevron';
@@ -34,7 +34,10 @@ const NavLi = styled.li`
       mb: 200,
       fontSize: 100
     })}
-    ${({ selected }) => (selected ? css({ color: 'blue', bg: 'rgba(18,115,230, 0.15)' }) : null)}
+    ${({ selected }) =>
+      selected
+        ? css({ color: 'blue', bg: 'rgba(18,115,230, 0.15)' })
+        : null}
   }
 
   a:hover {
@@ -55,7 +58,10 @@ function NavEntry(props) {
   const { path: selectedKey } = qs.parse(search);
   const stringToSearch = getSearchableString(entry.key);
 
-  if (inputSearchValue.length && !stringToSearch.includes(inputSearchValue)) {
+  if (
+    inputSearchValue.length &&
+    !stringToSearch.includes(inputSearchValue)
+  ) {
     return null;
   }
 
@@ -95,13 +101,17 @@ function NavFolder(props) {
     function searchKinds(kinds) {
       return Object.keys(kinds).reduce((acc, folderKind) => {
         const hasKinds = kinds[folderKind].kinds;
-        const hasEntries = kinds[folderKind].entries && kinds[folderKind].entries.length;
+        const hasEntries =
+          kinds[folderKind].entries &&
+          kinds[folderKind].entries.length;
 
         if (acc) {
           return true;
         }
 
-        if (getSearchableString(folderKind).includes(inputSearchValue)) {
+        if (
+          getSearchableString(folderKind).includes(inputSearchValue)
+        ) {
           return true;
         }
 
@@ -165,7 +175,13 @@ function NavKind(props) {
       <StyledFolderBorder />
       {item.kinds
         ? Object.keys(item.kinds).map((kind) => {
-            return <NavFolder kind={kind} item={item.kinds[kind]} key={kind} />;
+            return (
+              <NavFolder
+                kind={kind}
+                item={item.kinds[kind]}
+                key={kind}
+              />
+            );
           })
         : null}
       {item.entries
@@ -214,7 +230,14 @@ function NavRoot(props) {
   return (
     <div>
       {Object.keys(kinds).map((kind) => {
-        return <NavFolder kind={kind} item={kinds[kind]} key={kind} pl="0" />;
+        return (
+          <NavFolder
+            kind={kind}
+            item={kinds[kind]}
+            key={kind}
+            pl="0"
+          />
+        );
       })}
       {rootEntries.map((entry) => (
         <NavEntry entry={entry} key={entry.key} />

@@ -1,6 +1,6 @@
 import React from 'react';
-import Inline from '@sweatpants/inline';
-import ScreenReaderOnly from '@sweatpants/screenreaderonly';
+import { Inline } from '@sweatpants/inline';
+import { ScreenReaderOnly } from '@sweatpants/screenreaderonly';
 import useWindow from '../hooks/useWindow';
 import BackgroundContext from '../context/BackgroundContext';
 import Open from './icons/Open';

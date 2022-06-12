@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Box from '@sweatpants/box';
+import { Box } from '@sweatpants/box';
 
 const StyledChevron = styled.span`
   display: inline-block;
@@ -20,7 +20,11 @@ function Chevron({ open }) {
         width="15"
         height="15"
       >
-        <path d="M6.5 10.5l3-3-3-3" stroke="currentColor" strokeLinecap="square"></path>
+        <path
+          d="M6.5 10.5l3-3-3-3"
+          stroke="currentColor"
+          strokeLinecap="square"
+        ></path>
       </svg>
     </Box>
   );
