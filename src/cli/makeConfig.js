@@ -12,9 +12,13 @@ export const makeConfig = (userConfig, isProduction) => {
     root: root,
     plugins: [
       react({
-        fastRefresh: false
+        // fastRefresh: false
         // Do not treat story files as HMR boundaries
-        // exclude: [/\.(libby|stories)\.(t|j)sx?$/, /node_modules/, /dist/]
+        exclude: [
+          /\.(libby|stories)\.(t|j)sx?$/,
+          /node_modules/,
+          /dist/
+        ]
       })
     ],
     resolve: {
