@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { describe, add } from '@sparkpost/libby-react';
 
 describe('A Category 1', () => {
@@ -30,7 +30,7 @@ describe('C Category 2', () => {
 
 describe('B Category 3', () => {
   add('name 10 with lots of text in the title', () => {
-    const [toggle, setToggle] = React.useState(true);
+    const [toggle, setToggle] = useState(true);
 
     return (
       <div>
@@ -42,7 +42,7 @@ describe('B Category 3', () => {
 });
 
 add('c root entry 1', () => {
-  const [toggle, setToggle] = React.useState(true);
+  const [toggle, setToggle] = useState(true);
 
   return (
     <div>

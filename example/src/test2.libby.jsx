@@ -1,4 +1,3 @@
-import React from 'react';
 import { add, describe } from '@sparkpost/libby-react';
 
 describe('Error', () => {

@@ -6,6 +6,8 @@ function makeKey(name, kind) {
   return `${slug(kind)}__${slug(name)}`;
 }
 
+const exclude = ['/dist/', '/node_modules/', '/__tests__/'];
+
 export class Libby {
   constructor() {
     this.source = [];
@@ -13,16 +15,23 @@ export class Libby {
     this.kind = 'root';
   }
 
-  configure(include) {
-    function load(context) {
-      const keys = context.keys();
+  async configure() {
+    try {
+      const entries = import.meta.glob(
+        `__LIBBY_CWD__/**/*.{stories,libby}.{jsx,js,tsx,ts}`
+      );
 
-      keys.forEach((key) => {
-        context(key);
-      });
+      for (const entry in entries) {
+        // Manually filtering because vite globs doesnt support glob options
+        if (!exclude.some((s) => entry.includes(s))) {
+          await entries[entry]();
+        }
+      }
+    } catch (e) {
+      console.error('Error importing Libby entries');
     }
 
-    load(include);
+    return;
   }
 
   add(name, render) {
@@ -39,7 +48,10 @@ export class Libby {
   }
 
   describe(kind, callback) {
-    this.kind = this.kind && this.kind !== 'root' ? `${this.kind}__${kind}` : kind;
+    this.kind =
+      this.kind && this.kind !== 'root'
+        ? `${this.kind}__${kind}`
+        : kind;
     callback();
 
     const parts = this.kind.split('__');
@@ -54,7 +66,9 @@ export class Libby {
   }
 
   getEntry(requestedKey) {
-    const entry = this.source.filter(({ key }) => requestedKey === key);
+    const entry = this.source.filter(
+      ({ key }) => requestedKey === key
+    );
 
     if (entry.length) {
       return entry[0];
@@ -69,7 +83,11 @@ export class Libby {
       return str.toLowerCase();
     }
     source.sort((a, b) =>
-      lower(a.kind) < lower(b.kind) ? -1 : lower(a.kind) > lower(b.kind) ? 1 : 0
+      lower(a.kind) < lower(b.kind)
+        ? -1
+        : lower(a.kind) > lower(b.kind)
+        ? 1
+        : 0
     );
     return source;
   }
@@ -86,7 +104,10 @@ export class Libby {
         return {
           ...acc,
           [kind]: {
-            entries: [...(acc[kind]?.entries ? acc[kind].entries : []), item]
+            entries: [
+              ...(acc[kind]?.entries ? acc[kind].entries : []),
+              item
+            ]
           }
         };
       }
@@ -94,7 +115,10 @@ export class Libby {
       if (parts.length > 1) {
         const newRoot = parts.shift();
         const newKind = parts.join('__');
-        const kinds = acc[newRoot] && acc[newRoot].kinds ? acc[newRoot].kinds : {};
+        const kinds =
+          acc[newRoot] && acc[newRoot].kinds
+            ? acc[newRoot].kinds
+            : {};
 
         return {
           ...acc,

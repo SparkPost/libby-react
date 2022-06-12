@@ -1,6 +1,6 @@
 import React from 'react';
 import qs from 'query-string';
-import { Link } from '@reach/router';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import css from '@styled-system/css';
 import Box from '@sweatpants/box';
@@ -49,8 +49,9 @@ const NavLi = styled.li`
 function NavEntry(props) {
   const { entry } = props;
   const inputSearchValue = React.useContext(SearchContext);
+  const location = useLocation();
+  const search = location.search;
 
-  const search = window.location.search;
   const { path: selectedKey } = qs.parse(search);
   const stringToSearch = getSearchableString(entry.key);
 

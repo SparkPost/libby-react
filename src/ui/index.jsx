@@ -1,16 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 
-const out = document.createElement('div');
+const out = document.getElementById('root');
 
 // Creates a unique ID
 // Namespaces the event emitter to prevent cross tab or window events
 // This is defined here so that both the UI and Preview iframe have access to it
 out.id = 'sync_id';
 out.setAttribute('data-id', new Date().getTime());
-
-document.body.append(out);
 
 const style = document.createElement('style');
 style.innerHTML = `
@@ -23,11 +21,11 @@ style.innerHTML = `
     padding-right: 20px !important;
     color: #a2adb8 !important;
   }
-  
+
   #libby-source code {
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
   }
-  
+
   #libby-source pre {
     border-radius: 5px !important;
     border: 1px solid #d9e0e6 !important;
@@ -37,18 +35,14 @@ style.innerHTML = `
     padding: 24px !important;
     font-size: 14px !important;
     line-height: 22px !important;
-  }  
+  }
 `;
 document.head.appendChild(style);
 
+const root = createRoot(out);
+
 function renderApp() {
-  ReactDOM.render(<App />, out);
+  root.render(<App />);
 }
 
 renderApp();
-
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    renderApp();
-  });
-}

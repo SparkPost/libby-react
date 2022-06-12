@@ -3,7 +3,7 @@ import config from '__LIBBY_CONFIG__';
 
 function useBackground() {
   const [index, setIndex] = React.useState(0);
-  const backgrounds = config.background ?? {
+  const backgrounds = config.backgrounds ?? {
     default: 'white',
     values: [
       { name: 'white', value: '#ffffff' },

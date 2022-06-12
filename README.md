@@ -17,9 +17,6 @@ Final bundled size is **492 KB** for Libby, compared to **5.6 MB** for Storybook
 
 <img width="659" alt="Screen Shot 2022-03-23 at 8 15 29 PM" src="https://user-images.githubusercontent.com/3903325/159817365-be0b0d96-cb6f-473f-abac-17d7102aa712.png">
 
-
-
-
 ---
 
 ### Getting Started
@@ -34,21 +31,17 @@ Create a `libby.config.js` file to the root directory of your project:
 
 ```js
 // libby.config.js
-module.exports = {
+export default {
   // Required
-  entries: () => require.context('./src', true, /\.libby\.js$/),
+  entries: 'src/**/*.libby.jsx',
 
   // Optional
   outputPath: 'dist',
   layout: '.libby/layout.js',
-  home: '.libby/home.js',
   preview: '.libby/preview.js',
   openBrowser: true,
   port: 9000,
   title: 'Page Title',
-  webpackConfig: () => ({
-    // Custom Webpack config goes here
-  }),
   backgrounds: {
     default: 'white',
     values: [
@@ -84,7 +77,6 @@ npm run start
 Create an entry:
 
 ```js
-import React from 'react';
 import { describe, add, it } from '@sparkpost/libby-react';
 
 describe('My Component', () => {
