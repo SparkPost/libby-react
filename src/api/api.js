@@ -9,27 +9,6 @@ function makeKey(name, kind) {
   return `${slug(kind)}__${slug(name)}`;
 }
 
-// eslint-disable-next-line no-new-func
-// export const dynamicImport = new Function(
-//   'file',
-//   'return import(file)'
-// );
-
-// const loadDev = () => {
-//   if (!isDev) {
-//     return;
-//   }
-// };
-
-// const loadProd = async () => {
-//   if (isDev) {
-//     return;
-//   }
-
-//   // See https://github.com/antfu/vite-plugin-glob
-
-// };
-
 export class Libby {
   constructor() {
     this.source = [];
@@ -37,7 +16,7 @@ export class Libby {
     this.kind = 'root';
   }
 
-  async configure() {
+  configure = async () => {
     console.log(
       `[libby] ${isDev ? 'Development mode.' : 'Production mode.'}`
     );
@@ -74,9 +53,9 @@ export class Libby {
     }
 
     return;
-  }
+  };
 
-  add(name, render) {
+  add = (name, render) => {
     if (!name || !render) {
       return;
     }
@@ -87,9 +66,9 @@ export class Libby {
       name,
       render
     });
-  }
+  };
 
-  describe(kind, callback) {
+  describe = (kind, callback) => {
     this.kind =
       this.kind && this.kind !== 'root'
         ? `${this.kind}__${kind}`
@@ -105,9 +84,9 @@ export class Libby {
     } else {
       this.kind = 'root';
     }
-  }
+  };
 
-  getEntry(requestedKey) {
+  getEntry = (requestedKey) => {
     const entry = this.source.filter(
       ({ key }) => requestedKey === key
     );
@@ -117,9 +96,9 @@ export class Libby {
     }
 
     return null;
-  }
+  };
 
-  _sort() {
+  _sort = () => {
     const source = this.source;
     function lower(str) {
       return str.toLowerCase();
@@ -132,9 +111,9 @@ export class Libby {
         : 0
     );
     return source;
-  }
+  };
 
-  getMetadata() {
+  getMetadata = () => {
     const source = this._sort();
     const withoutRender = source.map(({ render, ...entry }) => entry);
 
@@ -181,5 +160,5 @@ export class Libby {
     }
 
     return withoutRender.reduce(expand, {});
-  }
+  };
 }
