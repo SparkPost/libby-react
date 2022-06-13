@@ -11,12 +11,19 @@ function makeKey(name, kind) {
 
 export class Libby {
   constructor() {
+    if (!!Libby.instance) {
+      return Libby.instance;
+    }
+
     this.source = [];
     this.formatted = {};
     this.kind = 'root';
+
+    Libby.instance = this;
+    return this;
   }
 
-  configure = async () => {
+  loadEntries = async () => {
     console.log(
       `[libby] ${isDev ? 'Development mode.' : 'Production mode.'}`
     );
@@ -56,6 +63,8 @@ export class Libby {
   };
 
   add = (name, render) => {
+    console.log('before push');
+    console.log(this.source);
     if (!name || !render) {
       return;
     }
@@ -66,6 +75,8 @@ export class Libby {
       name,
       render
     });
+    console.log('pushed');
+    console.log(this.source);
   };
 
   describe = (kind, callback) => {

@@ -44,6 +44,9 @@ export const makeConfig = (userConfig, isProduction) => {
       reportCompressedSize: false,
       chunkSizeWarningLimit: 1000,
       sourcemap: isProduction
+    },
+    optimizeDeps: {
+      exclude: ['@sparkpost/libby-react']
     }
   });
 

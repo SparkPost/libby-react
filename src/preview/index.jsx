@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createPageBus } from '../hooks/useBus';
-import { api } from '../api';
+import { loadEntries, getEntry, getMetadata } from '../api';
 import previewCallback from '__LIBBY_PREVIEW__';
 import ErrorDisplay from './error';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -48,10 +48,10 @@ function convertRenderToString(render) {
 function Preview() {
   const [searchParams, setSearchParams] = useSearchParams();
   const path = searchParams.get('path');
-  const entry = api.getEntry(path);
+  const entry = getEntry(path);
 
   bus.removeAllListeners();
-  bus.emit('set_entries', api.getMetadata());
+  bus.emit('set_entries', getMetadata());
   bus.on('load_entry', (newPath) => {
     if (newPath && path !== newPath) {
       setSearchParams({ path: newPath }, { replace: true });
@@ -59,7 +59,7 @@ function Preview() {
   });
 
   if (!entry) {
-    return <Layout>no entry</Layout>;
+    return <Layout />;
   }
 
   const render = createElement(entry.render);
@@ -84,6 +84,6 @@ function renderPreview() {
   );
 }
 
-api.configure().then(() => {
+loadEntries().then(() => {
   renderPreview();
 });
