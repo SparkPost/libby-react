@@ -107,7 +107,7 @@ Create a story:
 ```jsx
 /**
  * File names must match this glob pattern
- * `*.{stories,libby}.{jsx,js,tsx,ts}`
+ * `*.libby.{jsx,js,tsx,ts}`
  */
 import { describe, add, it } from '@sparkpost/libby-react';
 
