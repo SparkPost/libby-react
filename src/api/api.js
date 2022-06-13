@@ -41,8 +41,6 @@ export class Libby {
         { exhaustive: true } // includes dot files/directories
       );
 
-      console.log(entries);
-
       for (const entry in entries) {
         await entries[entry]();
       }
@@ -52,8 +50,6 @@ export class Libby {
           ? '[libby] No entries found.'
           : `[libby] Loaded ${Object.keys(entries).length} entries.`
       );
-
-      console.log(this.source);
     } catch (e) {
       console.error('[libby] Error importing entries.');
       console.error(e);
@@ -63,8 +59,6 @@ export class Libby {
   };
 
   add = (name, render) => {
-    console.log('before push');
-    console.log(this.source);
     if (!name || !render) {
       return;
     }
@@ -75,8 +69,6 @@ export class Libby {
       name,
       render
     });
-    console.log('pushed');
-    console.log(this.source);
   };
 
   describe = (kind, callback) => {

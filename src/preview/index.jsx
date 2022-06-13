@@ -8,7 +8,11 @@ import {
 } from 'react-router-dom';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 import { createPageBus } from '../hooks/useBus';
-import { loadEntries, getEntry, getMetadata } from '../api';
+import {
+  loadEntries,
+  getEntry,
+  getMetadata
+} from '@sparkpost/libby-react';
 import previewCallback from '__LIBBY_PREVIEW__';
 import ErrorDisplay from './error';
 import { ErrorBoundary } from 'react-error-boundary';

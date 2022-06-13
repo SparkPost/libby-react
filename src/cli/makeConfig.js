@@ -17,6 +17,10 @@ export const makeConfig = (userConfig, isProduction) => {
     },
     resolve: {
       alias: {
+        /**
+         * Resolving its own path so both stories and preview can reference the same Instance
+         */
+        '@sparkpost/libby-react': resolve(root, 'src/api/index.js'),
         __LIBBY_CWD__: userConfig.cwd,
         __LIBBY_CONFIG__: resolve(userConfig.cwd, 'libby.config.js'),
         __LIBBY_PREVIEW__: userConfig.preview
