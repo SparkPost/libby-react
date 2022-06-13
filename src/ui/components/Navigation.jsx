@@ -74,14 +74,15 @@ const NavLi = styled.li`
       selected
         ? css({ color: 'blue', bg: 'rgba(18,115,230, 0.15)' })
         : null}
-    &:only-child {
-      margin-bottom: 0;
-    }
     ${focusRing}
   }
 
   a:hover {
     ${css({ bg: 'gray.200' })}
+  }
+
+  &:only-child a {
+    margin-bottom: 0;
   }
 `;
 

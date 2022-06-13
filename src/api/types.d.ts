@@ -1,20 +1,16 @@
+import type { ReactNode } from 'react';
+
 /**
- * Creates a closure for your entries. Can be nested.
- * @param kind The category name
- * @param cb Callback function
+ * Creates a closure and folder for your entries. Can be nested.
  */
-export function describe(kind: string, cb: () => void): void;
+declare function describe(kind: string, callback: () => void): void;
 
 /**
  * Creates a libby entry
- * @param title Title of the entry
- * @param render Renders your React code
  */
-export function add(title: string, render: () => void): void;
+declare function add(title: string, render: () => ReactNode): void;
 
 /**
  * Creates a libby entry
- * @param title Title of the entry
- * @param render Renders your React code
  */
-export function it(title: string, render: () => void): void;
+declare function it(title: string, render: () => ReactNode): void;

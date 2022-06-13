@@ -1,7 +1,7 @@
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig, mergeConfig } from 'vite';
-import GlobPlugin from 'vite-plugin-glob';
+import glob from 'vite-plugin-glob';
 import react from '@vitejs/plugin-react';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,9 +11,16 @@ const root = resolve(__dirname, '../..');
 export const makeConfig = (userConfig, isProduction) => {
   const config = defineConfig({
     root: root,
-    plugins: [react(), GlobPlugin()],
+    plugins: [react(), glob()],
+    define: {
+      __LIBBY_IS_DEV__: JSON.stringify(!isProduction)
+    },
     resolve: {
       alias: {
+        /**
+         * Resolving its own path so both stories and preview can reference the same Instance
+         */
+        '@sparkpost/libby-react': resolve(root, 'src/api/index.js'),
         __LIBBY_CWD__: userConfig.cwd,
         __LIBBY_CONFIG__: resolve(userConfig.cwd, 'libby.config.js'),
         __LIBBY_PREVIEW__: userConfig.preview
@@ -41,6 +48,9 @@ export const makeConfig = (userConfig, isProduction) => {
       reportCompressedSize: false,
       chunkSizeWarningLimit: 1000,
       sourcemap: isProduction
+    },
+    optimizeDeps: {
+      exclude: ['@sparkpost/libby-react']
     }
   });
 

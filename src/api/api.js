@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-undef
+const isDev = __LIBBY_IS_DEV__;
+
 function slug(str) {
   return str.replace(/[^a-zA-Z0-9]+/g, '-');
 }
@@ -8,17 +11,29 @@ function makeKey(name, kind) {
 
 export class Libby {
   constructor() {
+    if (!!Libby.instance) {
+      return Libby.instance;
+    }
+
     this.source = [];
     this.formatted = {};
     this.kind = 'root';
+
+    Libby.instance = this;
+    return this;
   }
 
-  async configure() {
+  loadEntries = async () => {
+    console.log(
+      `[libby] ${isDev ? 'Development mode.' : 'Production mode.'}`
+    );
+
     try {
-      // See https://github.com/antfu/vite-plugin-glob
+      console.log('[libby] Loading entries...');
+
       const entries = import.meta.importGlob(
         [
-          '__LIBBY_CWD__/**/*.{stories,libby}.{jsx,js,tsx,ts}',
+          '__LIBBY_CWD__/**/*.libby.{jsx,js,tsx,ts}',
           '!**/node_modules/**',
           '!**/dist/**',
           '!**/__tests__/**'
@@ -29,14 +44,21 @@ export class Libby {
       for (const entry in entries) {
         await entries[entry]();
       }
+
+      console.log(
+        !entries
+          ? '[libby] No entries found.'
+          : `[libby] Loaded ${Object.keys(entries).length} entries.`
+      );
     } catch (e) {
       console.error('[libby] Error importing entries.');
+      console.error(e);
     }
 
     return;
-  }
+  };
 
-  add(name, render) {
+  add = (name, render) => {
     if (!name || !render) {
       return;
     }
@@ -47,9 +69,9 @@ export class Libby {
       name,
       render
     });
-  }
+  };
 
-  describe(kind, callback) {
+  describe = (kind, callback) => {
     this.kind =
       this.kind && this.kind !== 'root'
         ? `${this.kind}__${kind}`
@@ -65,9 +87,9 @@ export class Libby {
     } else {
       this.kind = 'root';
     }
-  }
+  };
 
-  getEntry(requestedKey) {
+  getEntry = (requestedKey) => {
     const entry = this.source.filter(
       ({ key }) => requestedKey === key
     );
@@ -77,9 +99,9 @@ export class Libby {
     }
 
     return null;
-  }
+  };
 
-  _sort() {
+  _sort = () => {
     const source = this.source;
     function lower(str) {
       return str.toLowerCase();
@@ -92,9 +114,9 @@ export class Libby {
         : 0
     );
     return source;
-  }
+  };
 
-  getMetadata() {
+  getMetadata = () => {
     const source = this._sort();
     const withoutRender = source.map(({ render, ...entry }) => entry);
 
@@ -141,5 +163,5 @@ export class Libby {
     }
 
     return withoutRender.reduce(expand, {});
-  }
+  };
 }

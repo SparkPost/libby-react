@@ -46,7 +46,3 @@ function renderApp() {
 }
 
 renderApp();
-
-if (import.meta.hot) {
-  import.meta.hot.accept();
-}
