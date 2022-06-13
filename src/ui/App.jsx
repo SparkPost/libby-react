@@ -4,7 +4,6 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Navigate,
   useSearchParams
 } from 'react-router-dom';
 import { SweatpantsProvider } from '@sweatpants/theme';
@@ -146,6 +145,16 @@ function App({ path }) {
             borderRadius="5px"
             height="100%"
           >
+            {!initialized && (
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                height="100%"
+              >
+                <Box fontSize="12px">Loading Entries...</Box>
+              </Box>
+            )}
             <Box
               id="libby-iframe"
               as="iframe"
@@ -196,7 +205,6 @@ function RouteHandler() {
   return (
     <Routes>
       <Route path="/" element={<App path={path} />} />
-      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }

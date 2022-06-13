@@ -1,7 +1,7 @@
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig, mergeConfig } from 'vite';
-import GlobPlugin from 'vite-plugin-glob';
+import glob from 'vite-plugin-glob';
 import react from '@vitejs/plugin-react';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,7 +11,10 @@ const root = resolve(__dirname, '../..');
 export const makeConfig = (userConfig, isProduction) => {
   const config = defineConfig({
     root: root,
-    plugins: [react(), GlobPlugin()],
+    plugins: [react(), glob()],
+    define: {
+      __LIBBY_IS_DEV__: JSON.stringify(!isProduction)
+    },
     resolve: {
       alias: {
         __LIBBY_CWD__: userConfig.cwd,

@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-undef
+const isDev = __LIBBY_IS_DEV__;
+
 function slug(str) {
   return str.replace(/[^a-zA-Z0-9]+/g, '-');
 }
@@ -5,6 +8,27 @@ function slug(str) {
 function makeKey(name, kind) {
   return `${slug(kind)}__${slug(name)}`;
 }
+
+// eslint-disable-next-line no-new-func
+// export const dynamicImport = new Function(
+//   'file',
+//   'return import(file)'
+// );
+
+// const loadDev = () => {
+//   if (!isDev) {
+//     return;
+//   }
+// };
+
+// const loadProd = async () => {
+//   if (isDev) {
+//     return;
+//   }
+
+//   // See https://github.com/antfu/vite-plugin-glob
+
+// };
 
 export class Libby {
   constructor() {
@@ -14,11 +38,16 @@ export class Libby {
   }
 
   async configure() {
+    console.log(
+      `[libby] ${isDev ? 'Development mode.' : 'Production mode.'}`
+    );
+
     try {
-      // See https://github.com/antfu/vite-plugin-glob
+      console.log('[libby] Loading entries...');
+
       const entries = import.meta.importGlob(
         [
-          '__LIBBY_CWD__/**/*.{stories,libby}.{jsx,js,tsx,ts}',
+          '__LIBBY_CWD__/**/*.libby.{jsx,js,tsx,ts}',
           '!**/node_modules/**',
           '!**/dist/**',
           '!**/__tests__/**'
@@ -26,11 +55,22 @@ export class Libby {
         { exhaustive: true } // includes dot files/directories
       );
 
+      console.log(entries);
+
       for (const entry in entries) {
         await entries[entry]();
       }
+
+      console.log(
+        !entries
+          ? '[libby] No entries found.'
+          : `[libby] Loaded ${Object.keys(entries).length} entries.`
+      );
+
+      console.log(this.source);
     } catch (e) {
       console.error('[libby] Error importing entries.');
+      console.error(e);
     }
 
     return;

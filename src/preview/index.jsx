@@ -2,7 +2,6 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   BrowserRouter,
-  Navigate,
   Route,
   Routes,
   useSearchParams
@@ -60,7 +59,7 @@ function Preview() {
   });
 
   if (!entry) {
-    return <Layout></Layout>;
+    return <Layout>no entry</Layout>;
   }
 
   const render = createElement(entry.render);
@@ -78,7 +77,7 @@ function renderPreview() {
       <BrowserRouter>
         <Routes>
           <Route path="/iframe.html" element={<Preview />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/iframe" element={<Preview />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>
@@ -88,7 +87,3 @@ function renderPreview() {
 api.configure().then(() => {
   renderPreview();
 });
-
-if (import.meta.hot) {
-  import.meta.hot.accept();
-}
