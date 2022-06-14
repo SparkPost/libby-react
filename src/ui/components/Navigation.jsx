@@ -81,7 +81,7 @@ const NavLi = styled.li`
     ${css({ bg: 'gray.200' })}
   }
 
-  &:only-child a {
+  div:last-child > & a {
     margin-bottom: 0;
   }
 `;

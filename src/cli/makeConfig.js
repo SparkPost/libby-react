@@ -50,6 +50,12 @@ export const makeConfig = (userConfig, isProduction) => {
       sourcemap: isProduction
     },
     optimizeDeps: {
+      entries: [
+        `${userConfig.cwd}/**/*.libby.{jsx,js,tsx,ts}`,
+        '!**/node_modules/**',
+        '!**/dist/**',
+        '!**/__tests__/**'
+      ],
       exclude: ['@sparkpost/libby-react']
     }
   });

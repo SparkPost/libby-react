@@ -3,7 +3,7 @@ import { createServer } from 'vite';
 import { makeConfig } from './makeConfig';
 import chalk from 'chalk';
 
-export default async (config, callback) => {
+export default async function start(config, callback) {
   console.log(chalk.green.bold('\nStarting Libby'));
 
   try {
@@ -39,4 +39,4 @@ export default async (config, callback) => {
   } catch (error) {
     callback(error);
   }
-};
+}

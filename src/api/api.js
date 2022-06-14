@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-undef
-const isDev = __LIBBY_IS_DEV__;
+import { createPageBus } from '../hooks/useBus';
 
 function slug(str) {
   return str.replace(/[^a-zA-Z0-9]+/g, '-');
@@ -9,7 +8,14 @@ function makeKey(name, kind) {
   return `${slug(kind)}__${slug(name)}`;
 }
 
-export class Libby {
+// Pulls a unique id from the parent window to namespace the event emitter
+// See: src/ui/index.jsasdfddd
+const syncElem = window.parent.document.getElementById('sync_id');
+const bus = createPageBus(
+  syncElem ? syncElem.getAttribute('data-id') : new Date().getTime()
+);
+
+class Libby {
   constructor() {
     if (!!Libby.instance) {
       return Libby.instance;
@@ -24,10 +30,6 @@ export class Libby {
   }
 
   loadEntries = async () => {
-    console.log(
-      `[libby] ${isDev ? 'Development mode.' : 'Production mode.'}`
-    );
-
     try {
       console.log('[libby] Loading entries...');
 
@@ -165,3 +167,15 @@ export class Libby {
     return withoutRender.reduce(expand, {});
   };
 }
+
+const api = new Libby();
+
+if (import.meta.hot) {
+  import.meta.hot.accept(() => {
+    // Forces preview to reload when it is updated
+    // This HMR boundary is here to prevent the parent UI from refreshing
+    window.location.reload();
+  });
+}
+
+export { api, bus };
