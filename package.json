@@ -1,6 +1,6 @@
 {
   "name": "@sparkpost/libby-react",
-  "version": "0.0.51-beta.3",
+  "version": "0.0.51",
   "description": "Libby is an open source tool for React component development",
   "type": "module",
   "publishConfig": {
