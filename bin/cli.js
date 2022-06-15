@@ -2,18 +2,16 @@
 import { dirname } from 'path';
 import meow from 'meow';
 import { findUp } from 'find-up';
-import lib from '../dist/cli/cli.js';
+import lib from '../dist/cli.js';
 
 const cli = meow(
   `
   Usage
     $ libby <command> [options...]
-
   Commands
     start          Starts the libby UI
     build          Builds the libby UI
     help           Displays this usage guide
-
 	Options
     --help, -h     Displays this usage guide
     --version, -v  Displays version info
@@ -52,18 +50,18 @@ async function libby(command, flags) {
     process.exit(1);
   }
 
-  const libby = await lib({
-    cwd: dirname(configPath),
-    configPath
-  });
+  const libby = await lib(
+    {
+      cwd: dirname(configPath),
+      configPath
+    },
+    () => {
+      process.exit(1);
+    }
+  );
 
   if (libby.hasOwnProperty(command)) {
-    libby[command]((err) => {
-      if (err) {
-        console.error(err);
-        process.exit(1);
-      }
-    });
+    libby[command]();
   } else {
     cli.showHelp();
     process.exit(1);

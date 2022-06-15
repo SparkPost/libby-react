@@ -1,3 +1,10 @@
+export const focusRing = `
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px white, 0 0 0 6px #1273e6;
+  }
+`;
+
 export const buttonReset = `
   border: none;
   margin: 0;
@@ -16,4 +23,5 @@ export const buttonReset = `
     border: 0;
     padding: 0;
   }
+  ${focusRing}
 `;

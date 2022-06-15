@@ -2,13 +2,9 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
-const out = document.getElementById('root');
-
-// Creates a unique ID
-// Namespaces the event emitter to prevent cross tab or window events
-// This is defined here so that both the UI and Preview iframe have access to it
-out.id = 'sync_id';
-out.setAttribute('data-id', new Date().getTime());
+const out = document.createElement('div');
+document.body.append(out);
+const root = createRoot(out);
 
 const style = document.createElement('style');
 style.innerHTML = `
@@ -17,32 +13,30 @@ style.innerHTML = `
 
   #libby-source .linenumber.react-syntax-highlighter-line-number {
     font-style: normal !important;
-    font-size: 10px !important;
+    font-size: 12px !important;
     padding-right: 20px !important;
     color: #a2adb8 !important;
   }
-
+  
   #libby-source code {
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
   }
-
+  
   #libby-source pre {
     border-radius: 5px !important;
-    border: 1px solid #ebf0f5 !important;
+    border: 1px solid #d9e0e6 !important;
     margin: 0 !important;
     background: white;
     height: 100% !important;
     padding: 24px !important;
-    font-size: 13px !important;
-    line-height: 1.45em !important;
-  }
+    font-size: 14px !important;
+    line-height: 22px !important;
+  }  
 `;
 document.head.appendChild(style);
 
-const root = createRoot(out);
+root.render(<App />);
 
-function renderApp() {
-  root.render(<App />);
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept();
 }
-
-renderApp();

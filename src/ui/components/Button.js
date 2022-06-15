@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import css from '@styled-system/css';
-import { buttonReset } from '../styles/buttonReset';
-import { focusRing } from '../styles/focusRing';
+import { buttonReset } from '../styles/styles';
 
 const StyledButton = styled.button`
   ${buttonReset}
@@ -17,14 +16,12 @@ const StyledButton = styled.button`
     px: 0,
     pr: 200,
     py: 100,
-    fontSize: 100,
-    bg: 'white'
+    fontSize: 100
   })}
 
   &:hover {
     ${css({ bg: 'gray.200' })}
   }
-  ${focusRing}
 `;
 
 function Button(props) {

@@ -4,8 +4,8 @@ import { ghcolors } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import styled from 'styled-components';
 import { Box } from '@sweatpants/box';
-import Button from './components/Button';
 import { ScreenReaderOnly } from '@sweatpants/screenreaderonly';
+import Button from './components/Button';
 import Orientation from './components/icons/Orientation';
 import IconWrapper from './components/IconWrapper';
 
@@ -16,9 +16,7 @@ const StyledWrapper = styled(Box)`
 const StyledIcon = styled(Button)`
   position: relative;
   transform: ${(props) =>
-    props.orientation === 'vertical'
-      ? 'rotate(90deg)'
-      : 'rotate(0deg)'};
+    props.orientation === 'vertical' ? 'rotate(90deg)' : 'rotate(0deg)'};
   transform-origin: 50% 50%;
 `;
 
@@ -112,12 +110,7 @@ function Source(props) {
         display={orientation === 'horizontal' ? 'none' : 'block'}
         {...resizeXProps}
       />
-      <Box
-        position="absolute"
-        right="8px"
-        top="8px"
-        transform="rotate(28deg)"
-      >
+      <Box position="absolute" right="8px" top="8px" transform="rotate(28deg)">
         <StyledIcon
           orientation={orientation}
           onClick={toggleOrientation}
@@ -125,17 +118,11 @@ function Source(props) {
         >
           <IconWrapper>
             <Orientation />
-            <ScreenReaderOnly>
-              Toggle source code orientation
-            </ScreenReaderOnly>
+            <ScreenReaderOnly>Toggle source code orientation</ScreenReaderOnly>
           </IconWrapper>
         </StyledIcon>
       </Box>
-      <SyntaxHighlighter
-        language="jsx"
-        showLineNumbers
-        style={ghcolors}
-      >
+      <SyntaxHighlighter language="jsx" showLineNumbers style={ghcolors}>
         {props.code}
       </SyntaxHighlighter>
     </StyledWrapper>

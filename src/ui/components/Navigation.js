@@ -1,11 +1,11 @@
-import { useState, useContext, useMemo } from 'react';
+import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import css from '@styled-system/css';
 import { Box } from '@sweatpants/box';
 import { Stack } from '@sweatpants/stack';
 import SearchContext from '../context/SearchContext';
-import { focusRing } from '../styles/focusRing';
+import { focusRing } from '../styles/styles';
 import Button from './Button';
 import Chevron from './icons/Chevron';
 import Skeleton from './Skeleton';
@@ -36,10 +36,7 @@ function searchKinds(kinds, inputSearchValue) {
     }
 
     if (hasEntries) {
-      acc = searchEntries(
-        kinds[folderKind].entries,
-        inputSearchValue
-      );
+      acc = searchEntries(kinds[folderKind].entries, inputSearchValue);
     }
 
     if (hasKinds && !acc) {
@@ -70,39 +67,31 @@ const NavLi = styled.li`
       mb: 200,
       fontSize: 100
     })}
-    ${({ selected }) =>
-      selected
-        ? css({ color: 'blue', bg: 'rgba(18,115,230, 0.15)' })
-        : null}
     ${focusRing}
+    ${({ $last }) => ($last ? 'margin-bottom: 0;' : null)}
+    ${({ $selected }) =>
+      $selected ? css({ color: 'blue', bg: 'rgba(18,115,230, 0.15)' }) : null}
   }
 
   a:hover {
     ${css({ bg: 'gray.200' })}
   }
-
-  div:last-child > & a {
-    margin-bottom: 0;
-  }
 `;
 
 function NavEntry(props) {
-  const { entry } = props;
-  const inputSearchValue = useContext(SearchContext);
+  const { entry, last } = props;
+  const inputSearchValue = React.useContext(SearchContext);
   const [searchParams] = useSearchParams();
 
   const selectedKey = searchParams.get('path');
   const stringToSearch = getSearchableString(entry.key);
 
-  if (
-    inputSearchValue.length &&
-    !stringToSearch.includes(inputSearchValue)
-  ) {
+  if (inputSearchValue.length && !stringToSearch.includes(inputSearchValue)) {
     return null;
   }
 
   return (
-    <NavLi selected={selectedKey === entry.key}>
+    <NavLi $selected={selectedKey === entry.key} $last={last}>
       <Link to={`/?path=${entry.key}`}>{entry.name}</Link>
     </NavLi>
   );
@@ -110,10 +99,10 @@ function NavEntry(props) {
 
 function NavFolder(props) {
   const { kind, item, pl } = props;
-  const [show, setShow] = useState(false);
-  const inputSearchValue = useContext(SearchContext);
+  const [show, setShow] = React.useState(false);
+  const inputSearchValue = React.useContext(SearchContext);
 
-  const containsSearchItem = useMemo(() => {
+  const containsSearchItem = React.useMemo(() => {
     let contains = false;
 
     // Checks if anything is being searched
@@ -175,20 +164,14 @@ function NavKind(props) {
       <StyledFolderBorder />
       {item.kinds
         ? Object.keys(item.kinds).map((kind) => {
-            return (
-              <NavFolder
-                kind={kind}
-                item={item.kinds[kind]}
-                key={kind}
-              />
-            );
+            return <NavFolder kind={kind} item={item.kinds[kind]} key={kind} />;
           })
         : null}
       {item.entries
-        ? item.entries.map((entry) => {
+        ? item.entries.map((entry, i) => {
             return (
               <Box key={entry.key} pl="400">
-                <NavEntry entry={entry} />
+                <NavEntry entry={entry} last={item.entries.length - 1 === i} />
               </Box>
             );
           })
@@ -199,11 +182,11 @@ function NavKind(props) {
 
 function NavRoot(props) {
   const { items = {}, initialized } = props;
-  const inputSearchValue = useContext(SearchContext);
   const { root, ...kinds } = items;
   const rootEntries = items.root ? items.root.entries : [];
+  const inputSearchValue = React.useContext(SearchContext);
 
-  const hide = useMemo(() => {
+  const hide = React.useMemo(() => {
     return (
       !searchEntries(rootEntries, inputSearchValue) &&
       !searchKinds(kinds, inputSearchValue)
@@ -238,14 +221,7 @@ function NavRoot(props) {
   return (
     <div>
       {Object.keys(kinds).map((kind) => {
-        return (
-          <NavFolder
-            kind={kind}
-            item={kinds[kind]}
-            key={kind}
-            pl="0"
-          />
-        );
+        return <NavFolder kind={kind} item={kinds[kind]} key={kind} pl="0" />;
       })}
       {rootEntries.map((entry) => (
         <NavEntry entry={entry} key={entry.key} />
