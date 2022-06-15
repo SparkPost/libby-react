@@ -30,59 +30,25 @@ npm i libby-react
 Create a `libby.config.js` file to the root directory of your project:
 
 ```js
+// libby.config.js
 export default {
   /**
-   * Output path for the build
+   * Imports your entries
+   * @see https://webpack.js.org/api/module-methods/#requirecontext
    */
+  entries: () => require.context('./src', true, /\.libby\.js$/),
+
+  // Optional
   outputPath: 'dist',
-
-  /**
-   * Path to a custom wrapper for all stories
-   * A react component must be the default export
-   */
-  layout: 'path/to/custom/layout.js',
-
-  /**
-   * Any other JS that needs to run before stories are mounted
-   * A function must be the default export
-   */
-  preview: 'path/to/custom/preview.js',
-
-  /**
-   * Opens the browser when running the Vite server
-   */
+  layout: '.libby/layout.js',
+  preview: '.libby/preview.js',
   openBrowser: true,
-
-  /**
-   * Specifies a port to when running the Vite server
-   */
   port: 9000,
-
-  /**
-   * Custom page title
-   */
   title: 'Page Title',
-
-  /**
-   * Custom Vite config
-   * `root` and `resolve` are provided for you
-   * `root` is a reference to your workspace, aka `__dirname`
-   * `resolve` is `path.resolve`
-   */
-  vite: ({ root, resolve, isProduction }) => {
-    return {
-      resolve: {
-        alias: {
-          '@': resolve(root, 'src/components')
-        }
-      }
-    };
-  },
-
-  /**
-   * Custom backgrounds for your stories
-   */
-  backgrounds: ['#ffffff', '#ffccd5', '#ebf0f5']
+  backgrounds: ['#ffffff', '#ebf0f5']
+  webpackConfig: () => ({
+    // Custom Webpack config goes here
+  }),
 };
 ```
 
@@ -102,17 +68,14 @@ Run libby:
 npm run start
 ```
 
-Create a story:
+Create an entry:
 
-```jsx
-/**
- * File names must match this glob pattern
- * `*.libby.{jsx,js,tsx,ts}`
- */
+```js
+import React from 'react';
 import { describe, add, it } from '@sparkpost/libby-react';
 
 describe('My Component', () => {
-  add('Default', () => <div>This is a React component!</div>);
+  add('Renders', () => <div>This is a React component!</div>);
 });
 ```
 

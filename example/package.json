@@ -4,15 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "npm link ../",
-    "prebuild": "npm link ../",
     "start": "libby start",
     "build": "libby build"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "@sparkpost/libby-react": "../",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

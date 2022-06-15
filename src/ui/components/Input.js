@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import css from '@styled-system/css';
-import { focusRing } from '../styles/focusRing';
+import { focusRing } from '../styles/styles';
 
 const StyledInput = styled.input`
   display: block;

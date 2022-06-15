@@ -10,13 +10,11 @@ import { SweatpantsProvider } from '@sweatpants/theme';
 import { Box } from '@sweatpants/box';
 import styled from 'styled-components';
 import { theme } from './theme';
-import useBus from '../hooks/useBus';
+import { useBus } from '../api/bus';
 import BackgroundContext, {
   BackgroundContextProvider
 } from './context/BackgroundContext';
-import SourceContext, {
-  SourceContextProvider
-} from './context/SourceContext';
+import SourceContext, { SourceContextProvider } from './context/SourceContext';
 import SearchContext from './context/SearchContext';
 import Source from './source';
 import useWindow from './hooks/useWindow';
@@ -24,7 +22,6 @@ import useSource from './hooks/useSource';
 import Navigation from './components/Navigation';
 import Input from './components/Input';
 import Toolbar from './components/Toolbar';
-import SkipToContent from './components/SkipToContent';
 
 const StyledPreviewWrapper = styled(Box)`
   transition: background 0.1s;
@@ -39,9 +36,8 @@ const StyledResizeWrapper = styled(Box)`
       : ''};
 `;
 
-function App({ path }) {
-  const { value: backgroundValue } =
-    React.useContext(BackgroundContext);
+function App() {
+  const { value: backgroundValue } = React.useContext(BackgroundContext);
   const sourceContext = React.useContext(SourceContext);
   const [initialized, setInitialized] = React.useState(false);
   const [navItems, setNavItems] = React.useState({});
@@ -49,16 +45,14 @@ function App({ path }) {
   const [inputValue, setInputValue] = React.useState('');
   const [entrySource, setEntrySource] = React.useState('');
   const inputRef = React.useRef();
-  const bus = useBus(
-    document.getElementById('sync_id').getAttribute('data-id')
-  );
-
-  const { resizeYProps, resizeXProps, width, height, resizing } =
-    useSource({
-      orientation: sourceContext.orientation
-    });
-
+  const bus = useBus();
   const environment = useWindow();
+  const [searchParams] = useSearchParams();
+  const path = searchParams.get('path');
+
+  const { resizeYProps, resizeXProps, width, height, resizing } = useSource({
+    orientation: sourceContext.orientation
+  });
 
   bus.removeAllListeners();
 
@@ -84,9 +78,7 @@ function App({ path }) {
   return (
     <Box
       display="grid"
-      gridTemplateColumns={
-        showSidebar ? 'minmax(200px, 18%) 1fr' : '1fr'
-      }
+      gridTemplateColumns={showSidebar ? 'minmax(200px, 18%) 1fr' : '1fr'}
     >
       {showSidebar ? (
         <Box
@@ -110,25 +102,14 @@ function App({ path }) {
           </Box>
           <Box px="300">
             <Box as="nav">
-              <SearchContext.Provider
-                value={inputValue.toLowerCase()}
-              >
-                <Navigation
-                  items={navItems}
-                  initialized={initialized}
-                />
+              <SearchContext.Provider value={inputValue.toLowerCase()}>
+                <Navigation items={navItems} initialized={initialized} />
               </SearchContext.Provider>
             </Box>
           </Box>
         </Box>
       ) : null}
-      <Box
-        position="relative"
-        height="100vh"
-        pt="700"
-        pb="600"
-        px="600"
-      >
+      <Box position="relative" height="100vh" pt="700" pb="600" px="600">
         <Box position="absolute" top="200" right="500">
           <Toolbar
             toggleSidebar={() => setShowSidebar(!showSidebar)}
@@ -145,16 +126,6 @@ function App({ path }) {
             borderRadius="5px"
             height="100%"
           >
-            {!initialized && (
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                height="100%"
-              >
-                <Box fontSize="12px">Loading Entries...</Box>
-              </Box>
-            )}
             <Box
               id="libby-iframe"
               as="iframe"
@@ -179,7 +150,7 @@ function App({ path }) {
                   bottom="0"
                   right="0"
                   bg="transparent"
-                />
+                ></Box>
               )}
               <Source
                 width={width}
@@ -198,25 +169,15 @@ function App({ path }) {
   );
 }
 
-function RouteHandler() {
-  const [searchParams] = useSearchParams();
-  const path = searchParams.get('path');
-
-  return (
-    <Routes>
-      <Route path="/" element={<App path={path} />} />
-    </Routes>
-  );
-}
-
 function Wrapper() {
   return (
     <BackgroundContextProvider>
       <SourceContextProvider>
         <SweatpantsProvider theme={theme}>
-          <SkipToContent />
           <BrowserRouter>
-            <RouteHandler />
+            <Routes>
+              <Route path="/" element={<App />} />
+            </Routes>
           </BrowserRouter>
         </SweatpantsProvider>
       </SourceContextProvider>
