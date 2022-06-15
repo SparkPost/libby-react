@@ -30,24 +30,60 @@ npm i libby-react
 Create a `libby.config.js` file to the root directory of your project:
 
 ```js
-// libby.config.js
+/**
+ * @type {import('@sparkpost/libby-react').Config}
+ */
 export default {
-  /**
-   * Imports your entries
+    /**
+   * Reference to your entries, imported with a `require.context` function
    * @see https://webpack.js.org/api/module-methods/#requirecontext
    */
-  entries: () => require.context('./src', true, /\.libby\.js$/),
+  entries: () => require.context('./src', true, /\.libby\.jsx$/),
+  /**
+   * Page title
+   * @default 'Libby'
+   */
+  title: 'Libby',
 
-  // Optional
-  outputPath: 'dist',
-  layout: '.libby/layout.js',
-  preview: '.libby/preview.js',
-  openBrowser: true,
+  /**
+   * Specifies the port for the dev server
+   * @default 9000
+   */
   port: 9000,
-  title: 'Page Title',
-  backgrounds: ['#ffffff', '#ebf0f5']
-  webpackConfig: () => ({
-    // Custom Webpack config goes here
+
+  /**
+   * Output path for the build
+   * @default 'dist/libby'
+   */
+  outputPath: 'dist/libby',
+
+  /**
+   * Opens the browser when running the dev server
+   */
+  openBrowser: true,
+
+  /**
+   * Path to any JS you want to run before entries are mounted
+   * A function must be the default export
+   */
+  preview: 'path/to/preview.jsx',
+
+  /**
+   * Path to a custom wrapper for all entries
+   * A react component must be the default export
+   */
+  layout: 'path/to/layout.jsx',
+
+  /**
+   * Array of background colors for your stories
+   */
+  backgrounds: ['#ffffff', '#FFCCD5', '#ebf0f5'],
+
+  /**
+   * Custom webpack config
+   */
+  webpack?: ({ mode }) => ({
+
   }),
 };
 ```
