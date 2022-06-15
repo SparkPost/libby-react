@@ -16,7 +16,7 @@
     "build:cli": "rimraf dist && rollup --config rollup.config.ts",
     "format": "prettier --write '**/*.{js,md}'",
     "start:example": "cd example && npm run start",
-    "build:ci": "cd example && npm run ci &&  npm run build"
+    "build:ci": "cd example && npm ci &&  npm run build"
   },
   "repository": {
     "type": "git",
