@@ -7,11 +7,11 @@ import {
   Routes
 } from 'react-router-dom';
 import reactElementToJSXString from 'react-element-to-jsx-string';
-import { getEntry, getMetadata, bus } from '../api';
-import previewCallback from '__LIBBY_PREVIEW__';
-import ErrorDisplay from './error';
 import { ErrorBoundary } from 'react-error-boundary';
-import Layout from './defaultLayout';
+import previewCallback from '__LIBBY_PREVIEW__';
+import Layout from '__LIBBY_LAYOUT__';
+import ErrorDisplay from './error';
+import { getEntry, getMetadata, bus } from '../api';
 
 const out = document.createElement('div');
 document.body.append(out);
