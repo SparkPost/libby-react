@@ -41,6 +41,7 @@
     "boxen": "^7.0.0",
     "chalk": "^5.0.1",
     "css-loader": "^5.0.0",
+    "esbuild": "^0.14.43",
     "esbuild-loader": "^2.19.0",
     "file-loader": "^6.2.0",
     "find-up": "^6.3.0",
