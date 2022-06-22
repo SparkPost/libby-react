@@ -1,10 +1,9 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 import App from './App';
+import { renderRoot } from '../utils/root';
 
 const out = document.createElement('div');
 document.body.append(out);
-const root = createRoot(out);
 
 const style = document.createElement('style');
 style.innerHTML = `
@@ -35,7 +34,7 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-root.render(<App />);
+renderRoot(<App />);
 
 if (import.meta.webpackHot) {
   import.meta.webpackHot.accept();

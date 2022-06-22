@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function DefaultLayout({ children }) {
-  console.log('[libby] Default layout loaded.');
   return (
     <div data-id="libby-preview" style={{ fontFamily: 'sans-serif' }}>
       {children ? (
