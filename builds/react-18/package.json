@@ -1,0 +1,17 @@
+{
+  "name": "libby-example",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "libby start",
+    "build": "libby build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@sparkpost/libby-react": "../../",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
