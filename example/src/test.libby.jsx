@@ -42,13 +42,27 @@ describe('B Category 3', () => {
   });
 });
 
-add('c root entry 1', () => {
+add('Hook 1', () => {
   const [toggle, setToggle] = React.useState(true);
 
   return (
     <div>
       <button onClick={() => setToggle(!toggle)}>toggle</button>
       {toggle ? 'am i working?' : 'yes'}
+    </div>
+  );
+});
+
+add('Hook 2', () => {
+  const ref = React.useRef(null);
+
+  React.useLayoutEffect(() => {
+    ref?.current?.focus()
+  }, [])
+
+  return (
+    <div>
+      <button ref={ref}>autofocus</button>
     </div>
   );
 });

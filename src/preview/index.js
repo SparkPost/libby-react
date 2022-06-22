@@ -1,5 +1,4 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
 import {
   useSearchParams,
   BrowserRouter,
@@ -12,10 +11,7 @@ import previewCallback from '__LIBBY_PREVIEW__';
 import Layout from '__LIBBY_LAYOUT__';
 import ErrorDisplay from './error';
 import { getEntry, getMetadata, bus } from '../api';
-
-const out = document.createElement('div');
-document.body.append(out);
-const root = createRoot(out);
+import { renderRoot } from '../utils/root';
 
 const style = document.createElement('style');
 style.innerHTML = `
@@ -26,11 +22,7 @@ style.innerHTML = `
 document.head.appendChild(style);
 previewCallback();
 
-function convertRenderToString(render) {
-  /**
-   * Doesnt work with stories with hooks, so we catch that error instead
-   * of falling back to the Error Boundary
-   */
+function makeCodeFromRender(render) {
   try {
     if (render) {
       return reactElementToJSXString.default(render(), {
@@ -39,9 +31,8 @@ function convertRenderToString(render) {
         functionValue: () => `fn()`
       });
     }
-    return '';
   } catch (e) {
-    return 'Could not render component entry source code.';
+    return 'Unable to load source code.';
   }
 }
 
@@ -51,28 +42,37 @@ function convertRenderToString(render) {
  * Hooks inside Preview do not conflict with any entry hooks.
  */
 
-function SourceHandler({ path }) {
+function SourceBoundary({ path }) {
   const entry = getEntry(path) ?? {};
-  bus.emit('set_entry_source', convertRenderToString(entry.render));
+  React.useEffect(() => {
+    bus.emit('set_entry_source', makeCodeFromRender(entry.render));
+  }, [path]);
   return null;
 }
 
-function EntryHandler({ path, render }) {
-  if (!render) {
+function EntryBoundary({ path }) {
+  const entry = getEntry(path) ?? {};
+  const { render: Render } = entry;
+  return <Render />;
+}
+
+function EntryHandler({ path }) {
+  if (!path) {
     return <Layout />;
   }
+
   return (
-    <Layout>
-      {render()}
-      <SourceHandler path={path} />
-    </Layout>
+    <ErrorBoundary FallbackComponent={ErrorDisplay}>
+      <Layout>
+        <EntryBoundary path={path} />
+      </Layout>
+    </ErrorBoundary>
   );
 }
 
 function Preview() {
   const [searchParams, setSearchParams] = useSearchParams();
   const path = searchParams.get('path');
-  const entry = getEntry(path) ?? {};
 
   bus.removeAllListeners();
   bus.emit('set_entries', getMetadata());
@@ -82,18 +82,24 @@ function Preview() {
     }
   });
 
-  return <EntryHandler path={path} render={entry.render} />;
+  return (
+    <>
+      <EntryHandler path={path} />
+      {/* Do not hijack app when source fails (for hooks) */}
+      <ErrorBoundary fallbackRender={() => null}>
+        <SourceBoundary path={path} />
+      </ErrorBoundary>
+    </>
+  );
 }
 
-root.render(
-  <ErrorBoundary FallbackComponent={ErrorDisplay}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/iframe.html" element={<Preview />} />
-        <Route path="/iframe" element={<Preview />} />
-      </Routes>
-    </BrowserRouter>
-  </ErrorBoundary>
+renderRoot(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/iframe.html" element={<Preview />} />
+      <Route path="/iframe" element={<Preview />} />
+    </Routes>
+  </BrowserRouter>
 );
 
 if (import.meta.webpackHot) {

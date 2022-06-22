@@ -45,7 +45,18 @@ class PageBus extends EventEmitter {
 }
 
 export function createBus() {
-  return new PageBus(`libby-${__LIBBY_ID__}`);
+  let id = new Date().getTime();
+
+  if (window.parent && window.parent.document) {
+    // Inside preview iframe, use parent windows ID
+    const syncElem = window.parent.document.getElementById('sync_id');
+    id = syncElem.getAttribute('data-id');
+  } else {
+    id = document.getElementById('sync_id').getAttribute('data-id');
+  }
+
+  // ID prevents bus events from propagating to new tabs
+  return new PageBus(`libby-${id}`);
 }
 
 export function useBus() {
