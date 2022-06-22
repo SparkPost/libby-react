@@ -15,8 +15,8 @@
     "start:cli": "rimraf dist && rollup -w --config rollup.config.ts",
     "build:cli": "rimraf dist && rollup --config rollup.config.ts",
     "format": "prettier --write '**/*.{js,md}'",
-    "build:18": "cd builds/react-18 && npm ci &&  npm run build",
-    "build:17": "cd builds/react-17 && npm ci &&  npm run build"
+    "build:18": "cd tests/react-18 && npm ci &&  npm run build",
+    "build:17": "cd tests/react-17 && npm ci &&  npm run build"
   },
   "repository": {
     "type": "git",
