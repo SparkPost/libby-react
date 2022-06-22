@@ -50,9 +50,10 @@ export function createBus() {
   if (window.parent && window.parent.document) {
     // Inside preview iframe, use parent windows ID
     const syncElem = window.parent.document.getElementById('sync_id');
-    id = syncElem.getAttribute('data-id');
+    id = syncElem ? syncElem.getAttribute('data-id') : new Date().getTime();
   } else {
-    id = document.getElementById('sync_id').getAttribute('data-id');
+    const syncElem = document.getElementById('sync_id');
+    id = syncElem ? syncElem.getAttribute('data-id') : new Date().getTime();
   }
 
   // ID prevents bus events from propagating to new tabs
