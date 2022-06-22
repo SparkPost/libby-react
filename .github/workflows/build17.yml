@@ -1,5 +1,5 @@
 # This workflow will do a clean install of node dependencies, build the libby example
-name: Build React 18
+name: Build React 17
 
 on:
   push:
