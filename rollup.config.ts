@@ -9,8 +9,8 @@ export default defineConfig({
   },
   output: {
     dir: path.resolve(__dirname, 'dist'),
-    entryFileNames: `[name].js`,
-    chunkFileNames: 'chunks/dep-[hash].js',
+    entryFileNames: `[name].mjs`,
+    chunkFileNames: 'chunks/dep-[hash].mjs',
     format: 'esm'
   },
   external: [

@@ -67,5 +67,5 @@ add('Hook 2', () => {
   );
 });
 
-add('dddd root entry', () => 'tedsdst');
+add('dddd root entry', () => 'test');
 add('a root entry', () => 'test');

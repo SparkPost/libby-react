@@ -16,7 +16,9 @@ export const renderRoot = async (node) => {
     const reactDomClient = (await import('react-dom/client')).default;
     const root = reactDomClient.createRoot(out);
     root.render(node);
+    return root;
   } else {
     ReactDOM.render(node, out);
+    return out;
   }
 };

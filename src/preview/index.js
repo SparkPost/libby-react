@@ -1,4 +1,5 @@
 import React from 'react';
+import { version } from 'react-dom';
 import {
   useSearchParams,
   BrowserRouter,
@@ -10,7 +11,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import previewCallback from '__LIBBY_PREVIEW__';
 import Layout from '__LIBBY_LAYOUT__';
 import ErrorDisplay from './error';
-import { getEntry, getMetadata, bus } from '../api';
+import { getEntry, getMetadata, bus } from '../api/index.js';
 import { renderRoot } from '../utils/root';
 
 const style = document.createElement('style');
@@ -93,15 +94,33 @@ function Preview() {
   );
 }
 
-renderRoot(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/iframe.html" element={<Preview />} />
-      <Route path="/iframe" element={<Preview />} />
-    </Routes>
-  </BrowserRouter>
-);
+const render = async () => {
+  return await renderRoot(
+    <BrowserRouter>
+      <Routes>
+        <Route path="/iframe.html" element={<Preview />} />
+        <Route path="/iframe" element={<Preview />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-if (import.meta.webpackHot) {
-  import.meta.webpackHot.accept();
+let root;
+const setRoot = (v) => {
+  root = v;
+};
+render().then(setRoot);
+
+if (module.hot) {
+  module.hot.accept('../api', () => {
+    const use18 =
+      version && (version.startsWith('18') || version.startsWith('0.0.0'));
+    if (use18) {
+      root.unmount();
+      render().then(setRoot);
+    } else {
+      root.remove();
+      render().then(setRoot);
+    }
+  });
 }
