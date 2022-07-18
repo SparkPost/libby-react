@@ -2,7 +2,7 @@
 import { dirname } from 'path';
 import meow from 'meow';
 import { findUp } from 'find-up';
-import lib from '../dist/cli.js';
+import { libby } from '../dist/cli.mjs';
 
 const cli = meow(
   `
@@ -31,7 +31,7 @@ const cli = meow(
   }
 );
 
-async function libby(command, flags) {
+async function run(command, flags) {
   if (flags.version) {
     cli.showVersion(1);
   }
@@ -50,7 +50,7 @@ async function libby(command, flags) {
     process.exit(1);
   }
 
-  const libby = await lib(
+  const libbyInstance = await libby(
     {
       cwd: dirname(configPath),
       configPath
@@ -60,12 +60,12 @@ async function libby(command, flags) {
     }
   );
 
-  if (libby.hasOwnProperty(command)) {
-    libby[command]();
+  if (libbyInstance.hasOwnProperty(command)) {
+    libbyInstance[command]();
   } else {
     cli.showHelp();
     process.exit(1);
   }
 }
 
-libby(cli.input[0], cli.flags);
+run(cli.input[0], cli.flags);

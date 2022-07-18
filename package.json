@@ -2,14 +2,13 @@
   "name": "@sparkpost/libby-react",
   "version": "0.0.57",
   "description": "Libby is an open source tool for React component development",
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "main": "src/api/index.js",
   "types": "src/api/types.d.ts",
   "bin": {
-    "libby": "bin/cli.js"
+    "libby": "bin/cli.mjs"
   },
   "scripts": {
     "start:cli": "rimraf dist && rollup -w --config rollup.config.ts",
